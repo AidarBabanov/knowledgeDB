@@ -9,33 +9,42 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.aidar.knowledgedb.R;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
-    EditText searchCompanyEditText;
-    Button searchCompanyButton;
+public class MainActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
 
+    private List<String> lastSearches;
+    MaterialSearchBar searchBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        //Remove title bar
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//
-//        //Remove notification bar
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        //set content view AFTER ABOVE sequence (to avoid crash)
         setContentView(R.layout.activity_main);
+        searchBar = (MaterialSearchBar) findViewById(R.id.search_company_searchBar);
+        searchBar.setOnSearchActionListener(this);
 
-        searchCompanyEditText = (EditText) findViewById(R.id.search_company_editText);
-        searchCompanyButton = (Button) findViewById(R.id.search_company_button);
     }
 
-    public void SearchCompany(View view) {
+
+    @Override
+    public void onSearchStateChanged(boolean enabled) {
+        String s = enabled ? "enabled" : "disabled";
+        Toast.makeText(MainActivity.this, "Search " + s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSearchConfirmed(CharSequence text) {
         Intent intentToStartCompanyActivity = new Intent(this, CompanyActivity.class);
         intentToStartCompanyActivity.putExtra("", "");
         startActivity(intentToStartCompanyActivity);
+    }
+
+    @Override
+    public void onButtonClicked(int buttonCode) {
+
     }
 }
