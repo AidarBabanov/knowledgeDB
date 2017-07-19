@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         +
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             android:name="com.example.aidar.knowledgedb"
             android:label="@string/app_name">
             <intent-filter>
@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CompanyActivity"></activity>
+        <activity android:name=".Activities.CompanyActivity"></activity>
     </application>
 
 </manifest>

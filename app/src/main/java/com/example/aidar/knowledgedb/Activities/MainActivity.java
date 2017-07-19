@@ -1,12 +1,14 @@
-package com.example.aidar.knowledgedb;
+package com.example.aidar.knowledgedb.Activities;
 
+
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.example.aidar.knowledgedb.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,14 +21,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         searchCompanyEditText = (EditText) findViewById(R.id.search_company_editText);
         searchCompanyButton = (Button) findViewById(R.id.search_company_button);
-        searchCompanyButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+    }
 
-                Log.i("Test", "Hello");
-                Toast toast = Toast.makeText(getApplicationContext(), "Pressed", Toast.LENGTH_LONG);
-                toast.show();
-
-            }
-        });
+    public void SearchCompany(View view) {
+        Intent intentToStartCompanyActivity  = new Intent(this, CompanyActivity.class);
+        intentToStartCompanyActivity.putExtra("", "");
+        startActivity(intentToStartCompanyActivity);
     }
 }

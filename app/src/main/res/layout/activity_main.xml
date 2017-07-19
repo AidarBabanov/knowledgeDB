@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.aidar.knowledgedb.MainActivity">
+    tools:context="com.example.aidar.knowledgedb.Activities.MainActivity">
 
     <EditText
         android:id="@+id/search_company_editText"
@@ -23,5 +23,6 @@
         android:layout_height="wrap_content"
         android:text="@string/search"
         tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="280dp" />
+        tools:layout_editor_absoluteX="280dp"
+        android:onClick="SearchCompany"/>
 </LinearLayout>
