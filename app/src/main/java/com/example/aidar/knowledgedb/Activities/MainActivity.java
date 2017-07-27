@@ -2,8 +2,10 @@ package com.example.aidar.knowledgedb.Activities;
 
 
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,14 +34,14 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
     @Override
     public void onSearchStateChanged(boolean enabled) {
-        String s = enabled ? "enabled" : "disabled";
-        Toast.makeText(MainActivity.this, "Search " + s, Toast.LENGTH_SHORT).show();
+//        String s = enabled ? "enabled" : "disabled";
+//        Toast.makeText(MainActivity.this, "Search " + s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSearchConfirmed(CharSequence text) {
         Intent intentToStartCompanyActivity = new Intent(this, CompanyActivity.class);
-        intentToStartCompanyActivity.putExtra("", "");
+        intentToStartCompanyActivity.putExtra(Intent.EXTRA_TEXT, text.toString());
         startActivity(intentToStartCompanyActivity);
     }
 
