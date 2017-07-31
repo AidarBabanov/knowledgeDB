@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.aidar.knowledgedb.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.List;
@@ -28,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         setContentView(R.layout.activity_main);
         searchBar = (MaterialSearchBar) findViewById(R.id.search_company_searchBar);
         searchBar.setOnSearchActionListener(this);
-
     }
 
 
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     @Override
     public void onSearchConfirmed(CharSequence text) {
         Intent intentToStartCompanyActivity = new Intent(this, CompanyActivity.class);
-        intentToStartCompanyActivity.putExtra(Intent.EXTRA_TEXT, text.toString());
+        intentToStartCompanyActivity.putExtra(Intent.EXTRA_TEXT, text);
+        intentToStartCompanyActivity.putExtra(Intent.EXTRA_INDEX, "/companies/0/categories");
         startActivity(intentToStartCompanyActivity);
     }
 

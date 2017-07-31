@@ -19,15 +19,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static android.R.attr.path;
 
 public class CompanyActivity extends AppCompatActivity implements RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler {
 
     List<String> list;
 
     RecyclerView topicRecyclerView;
-    RecyclerView.Adapter rvAdapter;
-    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference conditionRef = rootRef.child("condition");
+    RecyclerViewAdapter rvAdapter;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference localRef;
+    String refPath;
+    String current = "";
+    String answer = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +47,8 @@ public class CompanyActivity extends AppCompatActivity implements RecyclerViewAd
         getSupportActionBar().setTitle(title);
 
 
-
         list = new ArrayList<String>();
-        for(int i=0;i<10;i++)list.add(i+"");
+        //for(int i=0;i<10;i++)list.add(i+"");
         rvAdapter = new RecyclerViewAdapter(list, this);
         topicRecyclerView.setHasFixedSize(true);
         topicRecyclerView.setAdapter(rvAdapter);
@@ -51,23 +56,65 @@ public class CompanyActivity extends AppCompatActivity implements RecyclerViewAd
 
 
     @Override
-    public void onClick(String topic) {
-        Log  log = null;
-        log.i("RECEIVED", topic);
-        Class destinationClass = CompanyActivity.class;
-        Intent intentToStartDetailActivity = new Intent(this, destinationClass);
-        intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, topic);
-        startActivity(intentToStartDetailActivity);
+    public void onClick(String topic, int position) {
+        if (current.equals("questions")) {
+            Class destinationClass = SuperActivity.class;
+            Intent intentToStartDetailActivity = new Intent(this, destinationClass);
+            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, topic);
+            DatabaseReference ref2 = localRef.child("/"+position+"/answer");
+            ref2.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.i("DataSnapshot", dataSnapshot.toString());
+                    answer = (String) dataSnapshot.getValue();
+                    Log.i("SuperPuperAnswer", answer);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            intentToStartDetailActivity.putExtra(Intent.EXTRA_INDEX, answer);
+            Log.i("SuperAnswer", String.valueOf(answer.length()));
+            startActivity(intentToStartDetailActivity);
+        } else {
+            Class destinationClass = CompanyActivity.class;
+            Intent intentToStartDetailActivity = new Intent(this, destinationClass);
+            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, topic);
+            current = localRef.getKey();
+            String next = "";
+            if (current.equals("categories")) next = "subcats";
+            else if (current.equals("subcats")) next = "questions";
+            String path = refPath + "/" + position + "/" + next;
+            intentToStartDetailActivity.putExtra(Intent.EXTRA_INDEX, path);
+            startActivity(intentToStartDetailActivity);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        conditionRef.addValueEventListener(new ValueEventListener() {
+        refPath = getIntent().getStringExtra(Intent.EXTRA_INDEX);
+        localRef = databaseReference.child(refPath);
+        Log.i("DB reference", localRef.getKey());
+        localRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getValue(String.class);
-                
+                current = localRef.getKey();
+                for (DataSnapshot topicSnapShot : dataSnapshot.getChildren()) {
+                    Log.i("DataSnapshot", topicSnapShot.toString());
+                    String topic = (String) topicSnapShot.child("title").getValue();
+                    if (current.equals("questions"))
+                        topic = (String) topicSnapShot.child("question").getValue();
+                    Log.i("DB data", topic);
+                    list.add(topic);
+                }
+                rvAdapter.setData(list);
+                Log.i("List", list.toString());
+                rvAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -75,5 +122,6 @@ public class CompanyActivity extends AppCompatActivity implements RecyclerViewAd
 
             }
         });
+
     }
 }

@@ -24,7 +24,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private RecyclerViewAdapterOnClickHandler recyclerViewAdapterOnClickHandler;
 
     public interface RecyclerViewAdapterOnClickHandler {
-        void onClick(String topic);
+        void onClick(String topic, int position);
+    }
+
+    public void setData(List<String> listItems){
+        this.listItems = listItems;
     }
 
     public RecyclerViewAdapter(List<String> listItems, RecyclerViewAdapterOnClickHandler recyclerViewAdapterOnClickHandler) {
@@ -37,9 +41,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Context context = parent.getContext();
         int layoutIdForListItem = R.layout.list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentImmediately = false;
 
-        View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
+        View view = inflater.inflate(layoutIdForListItem, parent, false);
 
         return new ViewHolder(view);
     }
@@ -55,10 +58,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return listItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.list_item);
             textView.setOnClickListener(this);
@@ -68,9 +71,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             String topic = listItems.get(adapterPosition);
-            Log log = null;
-            log.i("Check", topic);
-            recyclerViewAdapterOnClickHandler.onClick(topic);
+            recyclerViewAdapterOnClickHandler.onClick(topic, adapterPosition);
         }
+
     }
 }
