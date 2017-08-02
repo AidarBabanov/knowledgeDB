@@ -5,31 +5,46 @@ import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.aidar.knowledgedb.R;
+import com.example.aidar.knowledgedb.RecyclerViewAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
+public class MainActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener, RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler {
 
-    private List<String> lastSearches;
     MaterialSearchBar searchBar;
+    RecyclerView popularCompaniesRV;
+    RecyclerViewAdapter rvAdapter;
+    List<String> popularCompaniesList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         searchBar = (MaterialSearchBar) findViewById(R.id.search_company_searchBar);
         searchBar.setOnSearchActionListener(this);
+        popularCompaniesRV = (RecyclerView) findViewById(R.id.popular_companies_recyclerView);
+        popularCompaniesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        popularCompaniesList = new ArrayList<String>();
+        for(int i=0;i<10;i++)popularCompaniesList.add("Казахтелеком");
+        rvAdapter = new RecyclerViewAdapter(popularCompaniesList, this);
+        popularCompaniesRV.setAdapter(rvAdapter);
     }
 
 
@@ -41,14 +56,23 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
     @Override
     public void onSearchConfirmed(CharSequence text) {
-        Intent intentToStartCompanyActivity = new Intent(this, CompanyActivity.class);
-        intentToStartCompanyActivity.putExtra(Intent.EXTRA_TEXT, text);
-        intentToStartCompanyActivity.putExtra(Intent.EXTRA_INDEX, "/companies/0/categories");
-        startActivity(intentToStartCompanyActivity);
+        startIssueActivity(text.toString());
     }
 
     @Override
     public void onButtonClicked(int buttonCode) {
+
+    }
+
+    @Override
+    public void onClick(String listItemName) {
+        startIssueActivity(listItemName);
+    }
+
+    private void startIssueActivity(String companyName){
+        Intent intentToStartIssueActivity = new Intent(this, IssueActivity.class);
+        intentToStartIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
+        startActivity(intentToStartIssueActivity);
 
     }
 }

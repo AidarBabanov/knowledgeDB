@@ -19,19 +19,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity-->
+        <!--android:name=".Activities.CompanyActivity"-->
+        <!--android:parentActivityName=".Activities.MainActivity">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.PARENT_ACTIVITY"-->
+        <!--android:value=".Activities.MainActivity" />-->
+        <!--</activity>-->
+        <!--<activity android:name=".Activities.SuperActivity" />-->
         <activity
-            android:name=".Activities.CompanyActivity"
-            android:parentActivityName=".Activities.MainActivity">
+            android:name=".Activities.IssueActivity"
+            android:parentActivityName=".Activities.MainActivity"
+            android:windowSoftInputMode="stateAlwaysVisible">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.MainActivity" />
         </activity>
-        <activity android:name=".Activities.SuperActivity" />
-        <activity android:name=".IssueActivity"
-            android:parentActivityName=".Activities.MainActivity">
+        <activity
+            android:name=".Activities.SolveIssueActivity"
+            android:parentActivityName=".Activities.IssueActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value=".Activities.IssueActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.AnswerActivity"
+            android:label="@string/title_activity_answer"
+            android:parentActivityName=".Activities.IssueActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.IssueActivity" />
         </activity>
     </application>
 

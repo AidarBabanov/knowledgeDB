@@ -24,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private RecyclerViewAdapterOnClickHandler recyclerViewAdapterOnClickHandler;
 
     public interface RecyclerViewAdapterOnClickHandler {
-        void onClick(String topic, int position);
+        void onClick(String listItemName);
     }
 
     public void setData(List<String> listItems){
@@ -71,7 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             String topic = listItems.get(adapterPosition);
-            recyclerViewAdapterOnClickHandler.onClick(topic, adapterPosition);
+            recyclerViewAdapterOnClickHandler.onClick(topic);
         }
 
     }

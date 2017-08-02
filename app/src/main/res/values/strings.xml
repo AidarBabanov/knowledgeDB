@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">knowledgeDB</string>
-    <string name="search_company">Найти компанию...</string>
+    <string name="search_company">Найти компанию…</string>
     <string name="search">Поиск</string>
     <string name="poular_companies">Популярные компании</string>
+    <string name="title_helped">Помогло</string>
+    <string name="title_not_helped">Не помогло</string>
+    <string name="title_activity_answer">Ответ</string>
+    <string name="describe_your_problem">Опишите Вашу проблему…</string>
 </resources>

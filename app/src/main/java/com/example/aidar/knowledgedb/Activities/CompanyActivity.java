@@ -55,44 +55,44 @@ public class CompanyActivity extends AppCompatActivity implements RecyclerViewAd
     }
 
 
-    @Override
-    public void onClick(String topic, int position) {
-        if (current.equals("questions")) {
-            Class destinationClass = SuperActivity.class;
-            Intent intentToStartDetailActivity = new Intent(this, destinationClass);
-            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, topic);
-            DatabaseReference ref2 = localRef.child("/"+position+"/answer");
-            ref2.addValueEventListener(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.i("DataSnapshot", dataSnapshot.toString());
-                    answer = (String) dataSnapshot.getValue();
-                    Log.i("SuperPuperAnswer", answer);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            intentToStartDetailActivity.putExtra(Intent.EXTRA_INDEX, answer);
-            Log.i("SuperAnswer", String.valueOf(answer.length()));
-            startActivity(intentToStartDetailActivity);
-        } else {
-            Class destinationClass = CompanyActivity.class;
-            Intent intentToStartDetailActivity = new Intent(this, destinationClass);
-            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, topic);
-            current = localRef.getKey();
-            String next = "";
-            if (current.equals("categories")) next = "subcats";
-            else if (current.equals("subcats")) next = "questions";
-            String path = refPath + "/" + position + "/" + next;
-            intentToStartDetailActivity.putExtra(Intent.EXTRA_INDEX, path);
-            startActivity(intentToStartDetailActivity);
-        }
-    }
+//    @Override
+//    public void onClick(String topic, int position) {
+//        if (current.equals("questions")) {
+//            Class destinationClass = SuperActivity.class;
+//            Intent intentToStartDetailActivity = new Intent(this, destinationClass);
+//            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, topic);
+//            DatabaseReference ref2 = localRef.child("/"+position+"/answer");
+//            ref2.addValueEventListener(new ValueEventListener() {
+//
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    Log.i("DataSnapshot", dataSnapshot.toString());
+//                    answer = (String) dataSnapshot.getValue();
+//                    Log.i("SuperPuperAnswer", answer);
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+//
+//            intentToStartDetailActivity.putExtra(Intent.EXTRA_INDEX, answer);
+//            Log.i("SuperAnswer", String.valueOf(answer.length()));
+//            startActivity(intentToStartDetailActivity);
+//        } else {
+//            Class destinationClass = CompanyActivity.class;
+//            Intent intentToStartDetailActivity = new Intent(this, destinationClass);
+//            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, topic);
+//            current = localRef.getKey();
+//            String next = "";
+//            if (current.equals("categories")) next = "subcats";
+//            else if (current.equals("subcats")) next = "questions";
+//            String path = refPath + "/" + position + "/" + next;
+//            intentToStartDetailActivity.putExtra(Intent.EXTRA_INDEX, path);
+//            startActivity(intentToStartDetailActivity);
+//        }
+//    }
 
     @Override
     protected void onStart() {
@@ -122,6 +122,11 @@ public class CompanyActivity extends AppCompatActivity implements RecyclerViewAd
 
             }
         });
+
+    }
+
+    @Override
+    public void onClick(String listItemName) {
 
     }
 }

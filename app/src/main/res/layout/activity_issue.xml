@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.aidar.knowledgedb.IssueActivity">
+    tools:context="com.example.aidar.knowledgedb.Activities.IssueActivity">
 
     <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/issue_desription_editText"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_margin="16dp"
+        android:background="@android:color/transparent"
         android:ems="10"
-        android:inputType="textMultiLine" />
+        android:gravity="top"
+        android:hint="@string/describe_your_problem"
+        android:inputType="text"
+        />
 </LinearLayout>
