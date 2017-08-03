@@ -51,4 +51,11 @@ public class SwipeStackAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public void setData(List<String> data) {
+        this.data = data;
+    }
+    public void insertItemIntoStack(int position, String item){
+        data.add(position, item);
+    }
 }

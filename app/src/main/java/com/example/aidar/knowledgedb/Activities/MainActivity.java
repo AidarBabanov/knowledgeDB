@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         popularCompaniesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         popularCompaniesList = new ArrayList<String>();
-        for(int i=0;i<10;i++)popularCompaniesList.add("Казахтелеком");
+        for (int i = 0; i < 10; i++) popularCompaniesList.add("Казахтелеком");
         rvAdapter = new RecyclerViewAdapter(popularCompaniesList, this);
         popularCompaniesRV.setAdapter(rvAdapter);
     }
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         startIssueActivity(listItemName);
     }
 
-    private void startIssueActivity(String companyName){
+    private void startIssueActivity(String companyName) {
         Intent intentToStartIssueActivity = new Intent(this, IssueActivity.class);
         intentToStartIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
         startActivity(intentToStartIssueActivity);
