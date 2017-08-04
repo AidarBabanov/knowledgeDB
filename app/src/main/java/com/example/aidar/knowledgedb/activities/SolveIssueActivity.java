@@ -1,9 +1,11 @@
-package com.example.aidar.knowledgedb.Activities;
+package com.example.aidar.knowledgedb.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.aidar.knowledgedb.DatabaseManager;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.SwipeStackAdapter;
 
@@ -17,6 +19,7 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
     SwipeStack swipeStack;
     List<String> data;
     SwipeStackAdapter swipeStackAdapter;
+    DatabaseManager databaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +27,12 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
 
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
         swipeStack.setListener(this);
-        data = new ArrayList<>();
-        for(int i=0;i<10;i++){
-            data.add(i+"");
-        }
+        databaseManager = new DatabaseManager();
+        databaseManager.findAllQuestionsInCompany("Казахтелеком");
+//        data = new ArrayList<>();
+//        for(int i=0;i<10;i++){
+//            data.add(i+"");
+//        }
         swipeStackAdapter = new SwipeStackAdapter(data,this);
         swipeStack.setAdapter(swipeStackAdapter);
     }
@@ -43,10 +48,16 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
     @Override
     public void onViewSwipedToRight(int position) {
         Log.i("SWIPED RIGHT", position+"");
+        startAnswerActivity();
     }
 
     @Override
     public void onStackEmpty() {
+    }
 
+    private void startAnswerActivity(){
+        Intent intentToStartSolveIssueActivity = new Intent(this, AnswerActivity.class);
+        //intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
+        startActivity(intentToStartSolveIssueActivity);
     }
 }

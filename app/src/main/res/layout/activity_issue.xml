@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.aidar.knowledgedb.Activities.IssueActivity">
+    tools:context="com.example.aidar.knowledgedb.activities.IssueActivity">
 
     <EditText
         android:id="@+id/issue_desription_editText"

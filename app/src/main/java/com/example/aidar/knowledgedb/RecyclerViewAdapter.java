@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.aidar.knowledgedb.Activities.CompanyActivity;
-
 import java.util.List;
 
 /**

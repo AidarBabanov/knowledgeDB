@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/MyTheme">
             <intent-filter>
@@ -19,36 +19,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-        <!--android:name=".Activities.CompanyActivity"-->
-        <!--android:parentActivityName=".Activities.MainActivity">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.PARENT_ACTIVITY"-->
-        <!--android:value=".Activities.MainActivity" />-->
-        <!--</activity>-->
-        <!--<activity android:name=".Activities.SuperActivity" />-->
         <activity
-            android:name=".Activities.IssueActivity"
-            android:parentActivityName=".Activities.MainActivity"
+            android:name=".activities.IssueActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:windowSoftInputMode="stateAlwaysVisible">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name=".Activities.SolveIssueActivity"
-            android:parentActivityName=".Activities.IssueActivity">
+            android:name=".activities.SolveIssueActivity"
+            android:parentActivityName=".activities.IssueActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.IssueActivity" />
+                android:value=".activities.IssueActivity" />
         </activity>
         <activity
-            android:name=".Activities.AnswerActivity"
+            android:name=".activities.AnswerActivity"
             android:label="@string/title_activity_answer"
-            android:parentActivityName=".Activities.IssueActivity">
+            android:parentActivityName=".activities.IssueActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.IssueActivity" />
+                android:value=".activities.IssueActivity" />
         </activity>
     </application>
 

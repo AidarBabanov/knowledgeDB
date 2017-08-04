@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.aidar.knowledgedb.Activities.AnswerActivity">
+    tools:context="com.example.aidar.knowledgedb.activities.AnswerActivity">
 
     <FrameLayout
         android:id="@+id/content"
@@ -15,23 +15,43 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/message"
+            android:id="@+id/answerTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-             />
+            android:isScrollContainer="false"
+            android:padding="16dp"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbars="vertical" />
 
     </FrameLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" />
+        android:layout_height="48dp">
+
+        <Button
+            android:id="@+id/not_helped_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="@string/title_not_helped"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/helped_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="@string/title_helped"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintRight_toLeftOf="@+id/not_helped_button"
+            tools:layout_editor_absoluteY="0dp" />
+    </android.support.constraint.ConstraintLayout>
+
 
 </LinearLayout>

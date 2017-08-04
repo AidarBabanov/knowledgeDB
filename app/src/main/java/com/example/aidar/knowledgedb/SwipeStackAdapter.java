@@ -17,12 +17,12 @@ import link.fls.swipestack.SwipeStack;
  * Created by aidar on 8/3/17.
  */
 
-public class SwipeStackAdapter extends BaseAdapter {
+public class SwipeStackAdapter<T> extends BaseAdapter {
 
     private Context context;
-    private List<String> data;
+    private List<T> data;
 
-    public SwipeStackAdapter(List<String> data, Context context){
+    public SwipeStackAdapter(List<T> data, Context context){
         this.data = data;
         this.context = context;
     }
@@ -33,7 +33,7 @@ public class SwipeStackAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public T getItem(int position) {
         return data.get(position);
     }
 
@@ -47,15 +47,16 @@ public class SwipeStackAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.swipe_card, parent, false);
         TextView textViewCard = (TextView) convertView.findViewById(R.id.solve_info_text);
-        textViewCard.setText(data.get(position));
+        textViewCard.setText(data.get(position).toString());
 
         return convertView;
     }
 
-    public void setData(List<String> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
-    public void insertItemIntoStack(int position, String item){
+
+    public void insertItemIntoStack(int position, T item){
         data.add(position, item);
     }
 }
