@@ -22,13 +22,13 @@ public class SwipeStackAdapter<T> extends BaseAdapter {
     private Context context;
     private List<T> data;
 
-    public SwipeStackAdapter(List<T> data, Context context){
-        this.data = data;
+    public SwipeStackAdapter(Context context) {
         this.context = context;
     }
 
     @Override
     public int getCount() {
+        if (data == null) return 0;
         return data.size();
     }
 
@@ -56,7 +56,11 @@ public class SwipeStackAdapter<T> extends BaseAdapter {
         this.data = data;
     }
 
-    public void insertItemIntoStack(int position, T item){
+    public void insertItemIntoStack(int position, T item) {
         data.add(position, item);
+    }
+
+    public List<T> getData() {
+        return data;
     }
 }

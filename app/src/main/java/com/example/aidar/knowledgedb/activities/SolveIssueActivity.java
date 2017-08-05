@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.aidar.knowledgedb.DatabaseManager;
+import com.example.aidar.knowledgedb.Question;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.SwipeStackAdapter;
 
@@ -17,7 +18,6 @@ import link.fls.swipestack.SwipeStack;
 public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.SwipeStackListener {
 
     SwipeStack swipeStack;
-    List<String> data;
     SwipeStackAdapter swipeStackAdapter;
     DatabaseManager databaseManager;
     @Override
@@ -27,13 +27,10 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
 
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
         swipeStack.setListener(this);
+        String companyName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         databaseManager = new DatabaseManager();
-        databaseManager.findAllQuestionsInCompany("Казахтелеком");
-//        data = new ArrayList<>();
-//        for(int i=0;i<10;i++){
-//            data.add(i+"");
-//        }
-        swipeStackAdapter = new SwipeStackAdapter(data,this);
+        swipeStackAdapter = new SwipeStackAdapter(this);
+        databaseManager.findAllQuestionsInCompany(companyName, swipeStackAdapter);
         swipeStack.setAdapter(swipeStackAdapter);
     }
 
@@ -41,23 +38,23 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
 
     @Override
     public void onViewSwipedToLeft(int position) {
-        Log.i("SWIPED LEFT", position+"");
-        swipeStackAdapter.insertItemIntoStack(position+1, "SUKA");
+        Log.i("SWIPED LEFT", String.valueOf(position));
     }
 
     @Override
     public void onViewSwipedToRight(int position) {
-        Log.i("SWIPED RIGHT", position+"");
-        startAnswerActivity();
+        Log.i("SWIPED RIGHT", String.valueOf(position));
+        startAnswerActivity(position);
     }
 
     @Override
     public void onStackEmpty() {
     }
 
-    private void startAnswerActivity(){
+    private void startAnswerActivity(int position){
         Intent intentToStartSolveIssueActivity = new Intent(this, AnswerActivity.class);
-        //intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
+        Question question = (Question) swipeStackAdapter.getItem(position);
+        intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, question.getAnswer());
         startActivity(intentToStartSolveIssueActivity);
     }
 }

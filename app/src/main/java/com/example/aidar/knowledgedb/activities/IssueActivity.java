@@ -19,8 +19,8 @@ public class IssueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issue);
 
-        String title = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-        getSupportActionBar().setTitle(title);
+        final String companyName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        getSupportActionBar().setTitle(companyName);
         issueEditText = (EditText) findViewById(R.id.issue_desription_editText);
 
         //Make editText multiline, other way doesn't work with keyboard
@@ -33,7 +33,7 @@ public class IssueActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    startSolveIssueActivity();
+                    startSolveIssueActivity(companyName);
                     return true;
                 }
                 return false;
@@ -41,9 +41,9 @@ public class IssueActivity extends AppCompatActivity {
         });
     }
 
-    private void startSolveIssueActivity(){
+    private void startSolveIssueActivity(String companyName){
         Intent intentToStartSolveIssueActivity = new Intent(this, SolveIssueActivity.class);
-        //intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
+        intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
         startActivity(intentToStartSolveIssueActivity);
     }
 }

@@ -5,16 +5,16 @@ package com.example.aidar.knowledgedb;
  */
 
 public class Question {
-    private String quesion;
+    private String question;
     private String answer;
     private int priority;
 
-    public String getQuesion() {
-        return quesion;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setQuesion(String quesion) {
-        this.quesion = quesion;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public String getAnswer() {
@@ -31,5 +31,9 @@ public class Question {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public String toString() {
+        return getQuestion();
     }
 }
