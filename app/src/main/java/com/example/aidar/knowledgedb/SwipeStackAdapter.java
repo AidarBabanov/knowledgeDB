@@ -4,14 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.zip.Inflater;
-
-import link.fls.swipestack.SwipeStack;
 
 /**
  * Created by aidar on 8/3/17.
@@ -20,10 +17,19 @@ import link.fls.swipestack.SwipeStack;
 public class SwipeStackAdapter<T> extends BaseAdapter {
 
     private Context context;
+    private ButtonSwipeOnClickHandler buttonSwipeOnClickHandler;
     private List<T> data;
+    private ImageButton yesButton;
+    private ImageButton noButton;
 
-    public SwipeStackAdapter(Context context) {
+    public SwipeStackAdapter(Context context, ButtonSwipeOnClickHandler buttonSwipeOnClickHandler) {
         this.context = context;
+        this.buttonSwipeOnClickHandler = buttonSwipeOnClickHandler;
+    }
+
+    public interface ButtonSwipeOnClickHandler {
+        void yesButtonSwiper();
+        void noButtonSwiper();
     }
 
     @Override
@@ -43,12 +49,25 @@ public class SwipeStackAdapter<T> extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.swipe_card, parent, false);
         TextView textViewCard = (TextView) convertView.findViewById(R.id.solve_info_text);
         textViewCard.setText(data.get(position).toString());
-
+        yesButton = (ImageButton) convertView.findViewById(R.id.yes_question);
+        noButton = (ImageButton) convertView.findViewById(R.id.no_question);
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonSwipeOnClickHandler.yesButtonSwiper();
+            }
+        });
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonSwipeOnClickHandler.noButtonSwiper();
+            }
+        });
         return convertView;
     }
 

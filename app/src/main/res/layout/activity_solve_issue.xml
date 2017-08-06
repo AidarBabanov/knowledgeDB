@@ -9,13 +9,14 @@
     <link.fls.swipestack.SwipeStack
         android:id="@+id/swipeStack"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:padding="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:stack_rotation="0"
-        app:stack_size="1"/>
+        app:stack_size="1"
+        app:animation_duration="200"/>
 
 </android.support.constraint.ConstraintLayout>

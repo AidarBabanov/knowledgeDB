@@ -10,12 +10,9 @@ import com.example.aidar.knowledgedb.Question;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.SwipeStackAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import link.fls.swipestack.SwipeStack;
 
-public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.SwipeStackListener {
+public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.SwipeStackListener, SwipeStackAdapter.ButtonSwipeOnClickHandler {
 
     SwipeStack swipeStack;
     SwipeStackAdapter swipeStackAdapter;
@@ -29,7 +26,7 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
         swipeStack.setListener(this);
         String companyName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         databaseManager = new DatabaseManager();
-        swipeStackAdapter = new SwipeStackAdapter(this);
+        swipeStackAdapter = new SwipeStackAdapter(this, this);
         databaseManager.findAllQuestionsInCompany(companyName, swipeStackAdapter);
         swipeStack.setAdapter(swipeStackAdapter);
     }
@@ -56,5 +53,16 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
         Question question = (Question) swipeStackAdapter.getItem(position);
         intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, question.getAnswer());
         startActivity(intentToStartSolveIssueActivity);
+    }
+
+
+    @Override
+    public void yesButtonSwiper() {
+        swipeStack.swipeTopViewToRight();
+    }
+
+    @Override
+    public void noButtonSwiper() {
+        swipeStack.swipeTopViewToLeft();
     }
 }

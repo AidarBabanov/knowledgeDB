@@ -7,4 +7,5 @@
     <string name="title_not_helped">Не помогло</string>
     <string name="title_activity_answer">Ответ</string>
     <string name="describe_your_problem">Опишите Вашу проблему…</string>
+    <string name="title_activity_solveIssue">Выбирите Ваш вопрос</string>
 </resources>
