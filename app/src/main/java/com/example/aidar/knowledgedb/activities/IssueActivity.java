@@ -3,6 +3,7 @@ package com.example.aidar.knowledgedb.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -44,6 +45,7 @@ public class IssueActivity extends AppCompatActivity {
     private void startSolveIssueActivity(String companyName){
         Intent intentToStartSolveIssueActivity = new Intent(this, SolveIssueActivity.class);
         intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
+        intentToStartSolveIssueActivity.putExtra("ISSUE", issueEditText.getText().toString());
         startActivity(intentToStartSolveIssueActivity);
     }
 }

@@ -25,9 +25,11 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
         swipeStack.setListener(this);
         String companyName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        String issue = getIntent().getStringExtra("ISSUE");
+        if(issue==null)issue="";
         databaseManager = new DatabaseManager();
         swipeStackAdapter = new SwipeStackAdapter(this, this);
-        databaseManager.findAllQuestionsInCompany(companyName, swipeStackAdapter);
+        databaseManager.findAllQuestionsInCompany(companyName, swipeStackAdapter, issue);
         swipeStack.setAdapter(swipeStackAdapter);
     }
 

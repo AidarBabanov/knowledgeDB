@@ -17,18 +17,32 @@ import java.util.List;
 
 public class DatabaseManager {
 
+    private final static String SPLIT_BY = " ";
+
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private DataSnapshot companySnapshot;
 
-    public void findAllQuestionsInCompany(String companyName, SwipeStackAdapter<Question> adapter) {
+    public void findAllQuestionsInCompany(String companyName, SwipeStackAdapter<Question> adapter, String issue) {
         Log.d("COMPANY NAME", companyName);
-        findCompanySnapshot(companyName, adapter);
-
-
+        findCompanySnapshot(companyName, adapter, issue);
     }
 
-    private void getQuestions(SwipeStackAdapter<Question> adapter){
+    private boolean checkWithIssue(String[] splittedIssue, String splittedStr[]) {
+        boolean result = false;
+        for (String strPart : splittedStr) {
+            strPart = strPart.toLowerCase();
+            for (String issuePart : splittedIssue) {
+                issuePart = issuePart.toLowerCase();
+                Log.i("ANSWER - QUESTION", strPart+" - "+issuePart);
+                if (issuePart.equals(strPart)) result = true;
+            }
+        }
+        return result;
+    }
+
+    private void getQuestions(SwipeStackAdapter<Question> adapter, String issue) {
         Log.d("COMPANY SNAPSHOT", companySnapshot.toString());
+        String splittedIssue[] = issue.split(SPLIT_BY);
         List<Question> questionList = new LinkedList<Question>();
         DataSnapshot categoriesSnapshot = companySnapshot.child("categories");
         for (DataSnapshot category : categoriesSnapshot.getChildren()) {
@@ -36,12 +50,20 @@ public class DatabaseManager {
             for (DataSnapshot subcat : subcats.getChildren()) {
                 DataSnapshot questions = subcat.child("questions");
                 for (DataSnapshot questionDS : questions.getChildren()) {
-                    Question question = new Question();
-                    Log.d("QuestionDS", questionDS.toString());
-                    question.setQuestion(questionDS.child("question").getValue().toString());
-                    question.setAnswer(questionDS.child("answer").getValue().toString());
-                    question.setPriority(0);
-                    questionList.add(question);
+                    String answerStr = questionDS.child("answer").getValue().toString();
+                    String questionStr  =questionDS.child("question").getValue().toString();
+                    String splittedAnswer[] = answerStr.split(SPLIT_BY);
+                    String splittedQuestion[] = questionStr.split(SPLIT_BY);
+                    boolean exist = checkWithIssue(splittedIssue, splittedAnswer);
+                    exist = exist && checkWithIssue(splittedIssue, splittedQuestion);
+                    if (exist) {
+                        Question question = new Question();
+                        Log.d("QuestionDS", questionDS.toString());
+                        question.setQuestion(questionDS.child("question").getValue().toString());
+                        question.setAnswer(questionDS.child("answer").getValue().toString());
+                        question.setPriority(0);
+                        questionList.add(question);
+                    }
                 }
             }
         }
@@ -49,7 +71,7 @@ public class DatabaseManager {
         adapter.notifyDataSetChanged();
     }
 
-    private void findCompanySnapshot(final String companyName, final SwipeStackAdapter<Question> adapter) {
+    private void findCompanySnapshot(final String companyName, final SwipeStackAdapter<Question> adapter, final String issue) {
         DatabaseReference localReference = databaseReference.child("companies");
         Log.d("FINDCOMPANYSNAPSHOT", localReference.toString());
         localReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -62,7 +84,7 @@ public class DatabaseManager {
                     Log.d("SNAPSHOTS", snapshot.toString());
                     if (currentCompany.equals(companyName)) {
                         companySnapshot = snapshot;
-                        getQuestions(adapter);
+                        getQuestions(adapter, issue);
                         break;
                     }
                 }

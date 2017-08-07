@@ -27,11 +27,12 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         setContentView(R.layout.activity_main);
         searchBar = (MaterialSearchBar) findViewById(R.id.search_company_searchBar);
         searchBar.setOnSearchActionListener(this);
+        searchBar.setElevation(1.5f);
         popularCompaniesRV = (RecyclerView) findViewById(R.id.popular_companies_recyclerView);
+        popularCompaniesRV.setHasFixedSize(true);
         popularCompaniesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         popularCompaniesList = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) popularCompaniesList.add("Казахтелеком");
+        for (int i = 0; i < 5; i++) popularCompaniesList.add("Казахтелеком");
         rvAdapter = new RecyclerViewAdapter(popularCompaniesList, this);
         popularCompaniesRV.setAdapter(rvAdapter);
     }
