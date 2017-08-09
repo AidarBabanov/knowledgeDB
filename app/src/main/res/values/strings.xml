@@ -3,9 +3,12 @@
     <string name="search_company">Найти компанию…</string>
     <string name="search">Поиск</string>
     <string name="poular_companies">Популярные компании</string>
-    <string name="title_helped">Помогло</string>
-    <string name="title_not_helped">Не помогло</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string name="title_activity_answer">Ответ</string>
+    <string name="isHelped">Помоголо?</string>
+    <string name="start_new_search">Начать новый поиск?</string>
+    <string name="continue_search">Продолжить поиск?</string>
     <string name="describe_your_problem">Опишите Вашу проблему…</string>
     <string name="title_activity_solveIssue">Выберите Ваш вопрос</string>
 </resources>

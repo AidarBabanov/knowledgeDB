@@ -17,6 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:stack_rotation="0"
         app:stack_size="1"
-        app:animation_duration="200"/>
+        app:animation_duration="300"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         setContentView(R.layout.activity_main);
         searchBar = (MaterialSearchBar) findViewById(R.id.search_company_searchBar);
         searchBar.setOnSearchActionListener(this);
-        searchBar.setElevation(1.5f);
+        searchBar.setElevation(0);
         popularCompaniesRV = (RecyclerView) findViewById(R.id.popular_companies_recyclerView);
         popularCompaniesRV.setHasFixedSize(true);
         popularCompaniesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
