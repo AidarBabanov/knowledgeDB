@@ -6,6 +6,10 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -25,6 +29,8 @@ public class AnswerActivity extends AppCompatActivity {
     ConstraintLayout footerNewSearchConstraintlayout;
     ConstraintLayout footerContiuneSearchConstraintlayout;
     FrameLayout footerFrameLayout;
+    long fadeInDuration = 150;
+    long fadeOutDuration  = 150;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,16 @@ public class AnswerActivity extends AppCompatActivity {
         footerNewSearchConstraintlayout = (ConstraintLayout) findViewById(R.id.footer_start_new_search);
         footerContiuneSearchConstraintlayout = (ConstraintLayout) findViewById(R.id.footer_continue_search);
 
+        final Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setStartOffset(fadeOutDuration);
+        fadeIn.setDuration(fadeInDuration);
+
+        final Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        //fadeOut.setStartOffset(fadeInDuration + timeBetween);
+        fadeOut.setDuration(fadeOutDuration);
+
         String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         answerTextView.setText(text);
         answerTextView.setMovementMethod(new ScrollingMovementMethod());
@@ -51,16 +67,23 @@ public class AnswerActivity extends AppCompatActivity {
         helpedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                footerNewSearchConstraintlayout.setVisibility(View.VISIBLE);
+                footerHelpedConstraintlayout.startAnimation(fadeOut);
                 footerHelpedConstraintlayout.setVisibility(View.INVISIBLE);
+
+                footerNewSearchConstraintlayout.startAnimation(fadeIn);
+                footerNewSearchConstraintlayout.setVisibility(View.VISIBLE);
+
             }
         });
 
         notHelpedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                footerContiuneSearchConstraintlayout.setVisibility(View.VISIBLE);
+                footerHelpedConstraintlayout.startAnimation(fadeOut);
                 footerHelpedConstraintlayout.setVisibility(View.INVISIBLE);
+
+                footerContiuneSearchConstraintlayout.startAnimation(fadeIn);
+                footerContiuneSearchConstraintlayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -74,8 +97,10 @@ public class AnswerActivity extends AppCompatActivity {
         dontStartnewSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 footerFrameLayout.animate().translationY(96);
-                footerNewSearchConstraintlayout.setVisibility(View.INVISIBLE);
+                footerFrameLayout.startAnimation(fadeOut);
+                footerFrameLayout.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -90,7 +115,8 @@ public class AnswerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 footerFrameLayout.animate().translationY(96);
-                footerContiuneSearchConstraintlayout.setVisibility(View.INVISIBLE);
+                footerFrameLayout.startAnimation(fadeOut);
+                footerFrameLayout.setVisibility(View.INVISIBLE);
             }
         });
     }
