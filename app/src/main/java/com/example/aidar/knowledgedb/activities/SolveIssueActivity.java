@@ -80,8 +80,7 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
            }
        });
     }
-
-
+    
     @Override
     public void onViewSwipedToLeft(int position) {
         Log.i("SWIPED LEFT", String.valueOf(position));
