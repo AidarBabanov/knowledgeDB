@@ -21,11 +21,21 @@ public class DatabaseManager {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private DataSnapshot companySnapshot;
+    private AfterloadHandler afterloadHandler;
+
+    public interface AfterloadHandler{
+        void doAfterLoad();
+    }
+
+    public DatabaseManager(AfterloadHandler afterloadHandler){
+        this.afterloadHandler = afterloadHandler;
+    }
 
     public void findAllQuestionsInCompany(String companyName, SwipeStackAdapter<Question> adapter, String issue) {
-        Log.d("COMPANY NAME", companyName);
+        //Log.d("COMPANY NAME", companyName);
         findCompanySnapshot(companyName, adapter, issue);
     }
+
 
     private boolean checkWithIssue(String[] splittedIssue, String splittedStr[]) {
         boolean result = false;
@@ -33,7 +43,7 @@ public class DatabaseManager {
             strPart = strPart.toLowerCase();
             for (String issuePart : splittedIssue) {
                 issuePart = issuePart.toLowerCase();
-                Log.i("ANSWER - QUESTION", strPart+" - "+issuePart);
+                //Log.i("ANSWER - QUESTION", strPart+" - "+issuePart);
                 if (issuePart.equals(strPart)) result = true;
             }
         }
@@ -41,7 +51,7 @@ public class DatabaseManager {
     }
 
     private void getQuestions(SwipeStackAdapter<Question> adapter, String issue) {
-        Log.d("COMPANY SNAPSHOT", companySnapshot.toString());
+        //Log.d("COMPANY SNAPSHOT", companySnapshot.toString());
         String splittedIssue[] = issue.split(SPLIT_BY);
         List<Question> questionList = new LinkedList<Question>();
         DataSnapshot categoriesSnapshot = companySnapshot.child("categories");
@@ -58,7 +68,7 @@ public class DatabaseManager {
                     exist = exist && checkWithIssue(splittedIssue, splittedQuestion);
                     if (exist) {
                         Question question = new Question();
-                        Log.d("QuestionDS", questionDS.toString());
+                        //Log.d("QuestionDS", questionDS.toString());
                         question.setQuestion(questionDS.child("question").getValue().toString());
                         question.setAnswer(questionDS.child("answer").getValue().toString());
                         question.setPriority(0);
@@ -69,19 +79,20 @@ public class DatabaseManager {
         }
         adapter.setData(questionList);
         adapter.notifyDataSetChanged();
+        afterloadHandler.doAfterLoad();
     }
 
     private void findCompanySnapshot(final String companyName, final SwipeStackAdapter<Question> adapter, final String issue) {
         DatabaseReference localReference = databaseReference.child("companies");
-        Log.d("FINDCOMPANYSNAPSHOT", localReference.toString());
+        //Log.d("FINDCOMPANYSNAPSHOT", localReference.toString());
         localReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("DATASNAPSHOT", dataSnapshot.toString());
+                //Log.d("DATASNAPSHOT", dataSnapshot.toString());
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String currentCompany = (String) snapshot.child("title").getValue();
-                    Log.d("SNAPSHOTS", snapshot.toString());
+                    //Log.d("SNAPSHOTS", snapshot.toString());
                     if (currentCompany.equals(companyName)) {
                         companySnapshot = snapshot;
                         getQuestions(adapter, issue);

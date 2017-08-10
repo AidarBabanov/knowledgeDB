@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.bluejamesbond.text.DocumentView;
 import com.example.aidar.knowledgedb.R;
 
 public class AnswerActivity extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class AnswerActivity extends AppCompatActivity {
     Button startNewSearchButton;
     Button dontStartnewSearchButton;
     Button continueSearchButton;
-    Button dontcontinueSearchButton;
+    Button dontContinueSearchButton;
     ConstraintLayout footerHelpedConstraintlayout;
     ConstraintLayout footerNewSearchConstraintlayout;
     ConstraintLayout footerContiuneSearchConstraintlayout;
@@ -38,12 +39,13 @@ public class AnswerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_answer);
 
         answerTextView = (TextView) findViewById(R.id.answerTextView);
+
         helpedButton = (Button) findViewById(R.id.helped_button);
         notHelpedButton = (Button) findViewById(R.id.not_helped_button);
         startNewSearchButton = (Button) findViewById(R.id.start_new_search);
         dontStartnewSearchButton = (Button) findViewById(R.id.dont_start_new_search);
         continueSearchButton = (Button) findViewById(R.id.continue_search);
-        dontcontinueSearchButton = (Button) findViewById(R.id.dont_continue_search);
+        dontContinueSearchButton = (Button) findViewById(R.id.dont_continue_search);
 
         footerFrameLayout = (FrameLayout) findViewById(R.id.footer);
         footerHelpedConstraintlayout = (ConstraintLayout) findViewById(R.id.footer_helped);
@@ -57,7 +59,6 @@ public class AnswerActivity extends AppCompatActivity {
 
         final Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setInterpolator(new AccelerateInterpolator());
-        //fadeOut.setStartOffset(fadeInDuration + timeBetween);
         fadeOut.setDuration(fadeOutDuration);
 
         String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
@@ -111,7 +112,7 @@ public class AnswerActivity extends AppCompatActivity {
             }
         });
 
-        dontcontinueSearchButton.setOnClickListener(new View.OnClickListener() {
+        dontContinueSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 footerFrameLayout.animate().translationY(96);

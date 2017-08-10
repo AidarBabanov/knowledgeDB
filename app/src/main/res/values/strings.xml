@@ -11,4 +11,6 @@
     <string name="continue_search">Продолжить поиск?</string>
     <string name="describe_your_problem">Опишите Вашу проблему…</string>
     <string name="title_activity_solveIssue">Выберите Ваш вопрос</string>
+    <string name="didnt_find">К сожалению мы ничего не нашли для Вас :(</string>
+    <string name="try_again">Попробовать снова</string>
 </resources>
