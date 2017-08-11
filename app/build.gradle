@@ -33,7 +33,6 @@ dependencies {
     compile 'link.fls:swipestack:0.3.0'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-vector-drawable:25.3.1'
-    compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

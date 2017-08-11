@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.bluejamesbond.text.DocumentView;
 import com.example.aidar.knowledgedb.R;
 
 public class AnswerActivity extends AppCompatActivity {

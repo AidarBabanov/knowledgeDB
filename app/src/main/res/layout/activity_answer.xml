@@ -17,18 +17,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_light_background"
+            android:background="@color/textBackground"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/questionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Heading"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textSize="34sp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:id="@+id/answerTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:lineSpacingMultiplier="1.7"
                 android:layout_marginBottom="48dp"
-                android:background="@color/cardview_light_background"
                 android:isScrollContainer="false"
-                android:padding="16dp" />
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingBottom="16dp"
+                android:paddingTop="0dp"/>
 
 
         </LinearLayout>
@@ -51,23 +70,19 @@
 
             <Button
                 android:id="@+id/not_helped_button"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:text="@string/no"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_editor_absoluteY="0dp" />
 
             <Button
                 android:id="@+id/helped_button"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:text="@string/yes"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintRight_toLeftOf="@+id/not_helped_button"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -90,23 +105,19 @@
 
             <Button
                 android:id="@+id/dont_start_new_search"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:text="@string/no"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_editor_absoluteY="0dp" />
 
             <Button
                 android:id="@+id/start_new_search"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:text="@string/yes"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintRight_toLeftOf="@+id/dont_start_new_search"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -130,23 +141,19 @@
 
             <Button
                 android:id="@+id/dont_continue_search"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:text="@string/no"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_editor_absoluteY="0dp" />
 
             <Button
                 android:id="@+id/continue_search"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:text="@string/yes"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintRight_toLeftOf="@id/dont_continue_search"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -159,7 +166,6 @@
                 android:text="@string/continue_search"
                 app:layout_constraintLeft_toLeftOf="parent"
                 tools:layout_editor_absoluteY="0dp" />
-
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>

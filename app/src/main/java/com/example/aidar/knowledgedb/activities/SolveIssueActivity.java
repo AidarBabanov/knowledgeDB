@@ -27,6 +27,8 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
     ProgressBar progressBar;
     LinearLayout didntFindLinearLayout;
     Button tryAgain;
+    Boolean saidYes = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,31 +75,34 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
 
         loadingTimer.scheduleAtFixedRate(timerTask, 0, 1000);
 
-       tryAgain.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               finish();
-           }
-       });
+        tryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
-    
+
     @Override
     public void onViewSwipedToLeft(int position) {
         Log.i("SWIPED LEFT", String.valueOf(position));
+        saidYes = false;
     }
 
     @Override
     public void onViewSwipedToRight(int position) {
         Log.i("SWIPED RIGHT", String.valueOf(position));
+        saidYes = true;
         startAnswerActivity(position);
     }
 
     @Override
     public void onStackEmpty() {
-        swipeStack.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
-        didntFindLinearLayout.setVisibility(View.VISIBLE);
-
+        if (!saidYes) {
+            swipeStack.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            didntFindLinearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void startAnswerActivity(int position) {
