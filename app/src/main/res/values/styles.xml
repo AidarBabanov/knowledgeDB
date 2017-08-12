@@ -7,11 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/secondaryTextColor</item>
-        <item name="android:windowBackground">@color/background</item>
-        <item name="android:colorBackground">@color/background</item>
+        <item name="buttonStyle">@style/button</item>
     </style>
     <style name="MainActivityTheme" parent="MainTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+    <style name="button" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
 </resources>
