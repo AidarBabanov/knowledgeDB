@@ -9,7 +9,7 @@
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="buttonStyle">@style/button</item>
     </style>
-    <style name="MainActivityTheme" parent="MainTheme">
+    <style name="NoActionBarTheme" parent="MainTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
