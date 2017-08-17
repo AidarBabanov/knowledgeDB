@@ -12,10 +12,14 @@ import android.widget.ProgressBar;
 
 import com.example.aidar.knowledgedb.DatabaseManager;
 import com.example.aidar.knowledgedb.DatabaseManager2;
+import com.example.aidar.knowledgedb.KnowledgeDB;
 import com.example.aidar.knowledgedb.Question;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.SwipeStackAdapter;
+import com.google.firebase.database.DataSnapshot;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,13 +29,13 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
 
     SwipeStack swipeStack;
     SwipeStackAdapter<Question> swipeStackAdapter;
-    DatabaseManager databaseManager;
     DatabaseManager2 databaseManager2;
     ProgressBar progressBar;
     LinearLayout didntFindLinearLayout;
     Button tryAgain;
     Boolean saidYes = false;
 
+    DataSnapshot companySnapshot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +47,19 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
         swipeStack.setListener(this);
-        String companyName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-        String issue = getIntent().getStringExtra("ISSUE");
+
+        companySnapshot = DatabaseManager2.getInstance().getTransferSnapshot();
+        String companyName = (String) companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue();
+        String issue = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaIssue));
         if (issue == null) issue = "";
-        databaseManager = new DatabaseManager(this);
+
+        databaseManager2 = DatabaseManager2.getInstance();
         swipeStackAdapter = new SwipeStackAdapter<>(this, this);
-        databaseManager.findAllQuestionsInCompany(companyName, swipeStackAdapter, issue);
+        List<Question> questionList = databaseManager2.findCompanyQuestions(databaseManager2.getTransferSnapshot(), issue);
+        Log.i("LIST SIZE", questionList.size()+"");
+        Collections.sort(questionList);
+        Collections.reverse(questionList);
+        swipeStackAdapter.setData(questionList);
         swipeStack.setAdapter(swipeStackAdapter);
 
         Timer loadingTimer = new Timer();
@@ -101,11 +112,11 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
 
     @Override
     public void onStackEmpty() {
-        if (!saidYes) {
-            swipeStack.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
-            didntFindLinearLayout.setVisibility(View.VISIBLE);
-        }
+//        if (!saidYes) {
+//            swipeStack.setVisibility(View.GONE);
+//            progressBar.setVisibility(View.GONE);
+//            didntFindLinearLayout.setVisibility(View.VISIBLE);
+//        }
     }
 
     private void startAnswerActivity(int position) {

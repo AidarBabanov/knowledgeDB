@@ -71,7 +71,6 @@ public class DatabaseManager {
                         //Log.d("QuestionDS", questionDS.toString());
                         question.setQuestion(questionDS.child("question").getValue().toString());
                         question.setAnswer(questionDS.child("answer").getValue().toString());
-                        question.setPriority(0);
                         questionList.add(question);
                     }
                 }

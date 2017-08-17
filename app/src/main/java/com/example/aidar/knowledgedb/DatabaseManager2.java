@@ -9,6 +9,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by aidar on 8/4/17.
  */
@@ -19,6 +23,7 @@ public class DatabaseManager2 {
     private DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
     private DataSnapshot rootSnapshot;
     private DataSnapshot transferSnapshot;
+    private final static String SPLIT_BY = " ";
 
     public DatabaseManager2() {
         rootReference.keepSynced(true);
@@ -59,9 +64,65 @@ public class DatabaseManager2 {
         return resultSnapshot;
     }
 
-    public
+    private double paragraphSimilarity(String[] p1, String[] p2) {
+        double similarity = 0;
+        int similarityNum = 0;
+        for (String s1 : p1) {
+            for (String s2 : p2) {
+                double currentSimilarity = getSimilarity(s1, s2);
+                //Log.i("Word similarity",s1+" "+s2+" "+currentSimilarity);
+                if (currentSimilarity >= 0.5) {
+                    //Log.i("Word similarity",currentSimilarity+"");
+                    similarity += currentSimilarity;
+                    similarityNum++;
+                }
+            }
+        }
+        if (similarityNum == 0) return 0;
+        return similarity / similarityNum;
+    }
 
-    static int distLowenstein(String S1, String S2) {
+    public List<Question> findCompanyQuestions(DataSnapshot companySnapshot, String issue) {
+        List<Question> questionList = new LinkedList<>();
+        String splittedIssue[] = issue.split(SPLIT_BY);
+
+        //Log.i("ISSUE", splittedIssue[0]);
+
+        //Log.i("companySnapshot", companySnapshot.toString());
+
+
+        DataSnapshot categoriesSnapshot = companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbCategories));
+        //Log.i("categoriesSnapshot", categoriesSnapshot.toString());
+        for (DataSnapshot category : categoriesSnapshot.getChildren()) {
+            DataSnapshot subcats = category.child(KnowledgeDB.getResourceString(R.string.dbSubCats));
+            //Log.i("subcats", subcats.toString());
+            for (DataSnapshot subcat : subcats.getChildren()) {
+                DataSnapshot questions = subcat.child(KnowledgeDB.getResourceString(R.string.dbQuestions));
+                //Log.i("questions", questions.toString());
+                for (DataSnapshot questionDS : questions.getChildren()) {
+                    String answerStr = questionDS.child(KnowledgeDB.getResourceString(R.string.dbAnswer)).getValue().toString();
+                    String questionStr = questionDS.child(KnowledgeDB.getResourceString(R.string.dbQuestion)).getValue().toString();
+                    String splittedAnswer[] = answerStr.split(SPLIT_BY);
+                    String splittedQuestion[] = questionStr.split(SPLIT_BY);
+                    double questionSimilarity = paragraphSimilarity(splittedQuestion, splittedIssue);
+                    double answerSimilarity = paragraphSimilarity(splittedAnswer, splittedIssue);
+                    double totalSimilarity = (questionSimilarity + answerSimilarity) / 2;
+                    if (totalSimilarity > 0) {
+                        //Log.i("QUESTION SIMILARITY", totalSimilarity + "");
+                        Question question = new Question();
+                        //Log.d("QuestionDS", questionDS.toString());
+                        question.setQuestion(questionDS.child(KnowledgeDB.getResourceString(R.string.dbQuestion)).getValue().toString());
+                        question.setAnswer(questionDS.child(KnowledgeDB.getResourceString(R.string.dbAnswer)).getValue().toString());
+                        question.setSimilarity(totalSimilarity);
+                        questionList.add(question);
+                    }
+                }
+            }
+        }
+        return questionList;
+    }
+
+    private static int distLowenstein(String S1, String S2) {
         int m = S1.length(), n = S2.length();
         int[] D1;
         int[] D2 = new int[n + 1];
@@ -88,7 +149,7 @@ public class DatabaseManager2 {
         return D2[n];
     }
 
-    static double getSimilarity(String S1, String S2) {
+    private static double getSimilarity(String S1, String S2) {
         double similar;
         int totalLength = Math.max(S1.length(), S2.length());
         similar = 1.0 * (totalLength - distLowenstein(S1, S2)) / totalLength;
