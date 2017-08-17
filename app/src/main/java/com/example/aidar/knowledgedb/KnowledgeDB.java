@@ -3,6 +3,8 @@ package com.example.aidar.knowledgedb;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,6 +21,11 @@ public class KnowledgeDB extends Application {
         super.onCreate();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         appContext = this;
+    }
+
+    @NonNull
+    public static String getResourceString(@StringRes int id){
+        return appContext.getResources().getString(id);
     }
 
     public static Context getAppContext() {

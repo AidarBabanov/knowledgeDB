@@ -18,6 +18,7 @@ public class DatabaseManager2 {
     private static DatabaseManager2 instance;
     private DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
     private DataSnapshot rootSnapshot;
+    private DataSnapshot transferSnapshot;
 
     public DatabaseManager2() {
         rootReference.keepSynced(true);
@@ -41,15 +42,15 @@ public class DatabaseManager2 {
     }
 
     public DataSnapshot findCompanyByName(String companyName) {
-        String dbCompanies = KnowledgeDB.getAppContext().getResources().getString(R.string.dbCompanies);
+        String dbCompanies = KnowledgeDB.getResourceString(R.string.dbCompanies);
         DataSnapshot companiesSnapshot = rootSnapshot.child(dbCompanies);
         DataSnapshot resultSnapshot = companiesSnapshot.child("0");
-        double maxSimilarity=-1;
-        for(DataSnapshot companySnapshot: companiesSnapshot.getChildren()){
-            String dbTitle = KnowledgeDB.getAppContext().getResources().getString(R.string.dbTitle);
+        double maxSimilarity = -1;
+        for (DataSnapshot companySnapshot : companiesSnapshot.getChildren()) {
+            String dbTitle = KnowledgeDB.getResourceString(R.string.dbTitle);
             String currentCompanyName = (String) companySnapshot.child(dbTitle).getValue();
             double currentSimilarity = getSimilarity(companyName, currentCompanyName);
-            if(currentSimilarity>=maxSimilarity){
+            if (currentSimilarity >= maxSimilarity) {
                 resultSnapshot = companySnapshot;
                 maxSimilarity = currentSimilarity;
             }
@@ -57,6 +58,8 @@ public class DatabaseManager2 {
 
         return resultSnapshot;
     }
+
+    public
 
     static int distLowenstein(String S1, String S2) {
         int m = S1.length(), n = S2.length();
@@ -106,5 +109,13 @@ public class DatabaseManager2 {
 
     public void setRootSnapshot(DataSnapshot rootSnapshot) {
         this.rootSnapshot = rootSnapshot;
+    }
+
+    public DataSnapshot getTransferSnapshot() {
+        return transferSnapshot;
+    }
+
+    public void setTransferSnapshot(DataSnapshot transferSnapshot) {
+        this.transferSnapshot = transferSnapshot;
     }
 }

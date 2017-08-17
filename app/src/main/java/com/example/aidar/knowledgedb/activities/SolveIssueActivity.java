@@ -26,6 +26,7 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
     SwipeStack swipeStack;
     SwipeStackAdapter<Question> swipeStackAdapter;
     DatabaseManager databaseManager;
+    DatabaseManager2 databaseManager2;
     ProgressBar progressBar;
     LinearLayout didntFindLinearLayout;
     Button tryAgain;

@@ -14,6 +14,7 @@ import com.example.aidar.knowledgedb.RecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
     @Override
     public void onSearchConfirmed(CharSequence text) {
-        startIssueActivity(text.toString());
+        DataSnapshot companySnapshot = databaseManager2.findCompanyByName(text.toString());
+        startIssueActivity(companySnapshot);
     }
 
     @Override
@@ -63,13 +65,12 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     @Override
     public void onClick(String listItemName) {
         DataSnapshot companySnapshot = databaseManager2.findCompanyByName(listItemName);
-        Log.i("COMPANY SNAPSHOT HOHO", companySnapshot.toString());
-        startIssueActivity(listItemName);
+        startIssueActivity(companySnapshot);
     }
 
-    private void startIssueActivity(String companyName) {
+    private void startIssueActivity(DataSnapshot dataSnapshot) {
         Intent intentToStartIssueActivity = new Intent(this, IssueActivity.class);
-        intentToStartIssueActivity.putExtra(Intent.EXTRA_TEXT, companyName);
+        databaseManager2.setTransferSnapshot(dataSnapshot);
         startActivity(intentToStartIssueActivity);
 
     }
