@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.aidar.knowledgedb.DatabaseManager2;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.RecyclerViewAdapter;
 import com.mancj.materialsearchbar.MaterialSearchBar;
@@ -20,10 +21,13 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     RecyclerView popularCompaniesRV;
     RecyclerViewAdapter rvAdapter;
     List<String> popularCompaniesList;
-
+    DatabaseManager2 databaseManager2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        databaseManager2 = DatabaseManager2.getInstance();
+
         setContentView(R.layout.activity_main);
         searchBar = (MaterialSearchBar) findViewById(R.id.search_company_searchBar);
         searchBar.setOnSearchActionListener(this);

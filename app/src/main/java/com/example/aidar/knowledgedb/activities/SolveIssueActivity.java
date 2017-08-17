@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.example.aidar.knowledgedb.DatabaseManager;
+import com.example.aidar.knowledgedb.DatabaseManager2;
 import com.example.aidar.knowledgedb.Question;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.SwipeStackAdapter;

@@ -13,4 +13,11 @@
     <string name="title_activity_solveIssue">Выберите Ваш вопрос</string>
     <string name="didnt_find">К сожалению мы ничего не нашли для Вас :(</string>
     <string name="try_again">Попробовать снова</string>
+
+    <string name="dbCompanies">companies</string>
+    <string name="dbCategories">companies</string>
+    <string name="dbSubCats">subcats</string>
+    <string name="dbQuestions">questions</string>
+    <string name="dbQuestion">question</string>
+    <string name="dbAnswer">answer</string>
 </resources>
