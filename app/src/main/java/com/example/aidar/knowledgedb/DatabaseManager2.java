@@ -1,5 +1,6 @@
 package com.example.aidar.knowledgedb;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,8 +41,21 @@ public class DatabaseManager2 {
     }
 
     public DataSnapshot findCompanyByName(String companyName) {
-        DataSnapshot dataSnapshot = rootSnapshot.child("Companies");
-        return null;
+        String dbCompanies = KnowledgeDB.getAppContext().getResources().getString(R.string.dbCompanies);
+        DataSnapshot companiesSnapshot = rootSnapshot.child(dbCompanies);
+        DataSnapshot resultSnapshot = companiesSnapshot.child("0");
+        double maxSimilarity=-1;
+        for(DataSnapshot companySnapshot: companiesSnapshot.getChildren()){
+            String dbTitle = KnowledgeDB.getAppContext().getResources().getString(R.string.dbTitle);
+            String currentCompanyName = (String) companySnapshot.child(dbTitle).getValue();
+            double currentSimilarity = getSimilarity(companyName, currentCompanyName);
+            if(currentSimilarity>=maxSimilarity){
+                resultSnapshot = companySnapshot;
+                maxSimilarity = currentSimilarity;
+            }
+        }
+
+        return resultSnapshot;
     }
 
     static int distLowenstein(String S1, String S2) {
@@ -71,7 +85,7 @@ public class DatabaseManager2 {
         return D2[n];
     }
 
-    static double similarity(String S1, String S2) {
+    static double getSimilarity(String S1, String S2) {
         double similar;
         int totalLength = Math.max(S1.length(), S2.length());
         similar = 1.0 * (totalLength - distLowenstein(S1, S2)) / totalLength;

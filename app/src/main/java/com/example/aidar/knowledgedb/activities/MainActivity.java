@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.example.aidar.knowledgedb.DatabaseManager2;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.RecyclerViewAdapter;
+import com.google.firebase.database.DataSnapshot;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
     @Override
     public void onClick(String listItemName) {
+        DataSnapshot companySnapshot = databaseManager2.findCompanyByName(listItemName);
+        Log.i("COMPANY SNAPSHOT HOHO", companySnapshot.toString());
         startIssueActivity(listItemName);
     }
 

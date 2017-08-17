@@ -20,4 +20,5 @@
     <string name="dbQuestions">questions</string>
     <string name="dbQuestion">question</string>
     <string name="dbAnswer">answer</string>
+    <string name="dbTitle">title</string>
 </resources>
