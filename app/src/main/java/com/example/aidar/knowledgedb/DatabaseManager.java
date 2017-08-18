@@ -17,101 +17,159 @@ import java.util.List;
 
 public class DatabaseManager {
 
+    private static DatabaseManager instance;
+    private DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
+    private DataSnapshot rootSnapshot;
+    private DataSnapshot transferSnapshot;
     private final static String SPLIT_BY = " ";
 
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private DataSnapshot companySnapshot;
-    private AfterloadHandler afterloadHandler;
+    public DatabaseManager() {
+        rootReference.keepSynced(true);
+        rootReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                rootSnapshot = dataSnapshot;
+                Log.i("Firebase data changed", dataSnapshot.toString());
+            }
 
-    public interface AfterloadHandler{
-        void doAfterLoad();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Firebase error", databaseError.toString());
+            }
+        });
     }
 
-    public DatabaseManager(AfterloadHandler afterloadHandler){
-        this.afterloadHandler = afterloadHandler;
+    public static DatabaseManager getInstance() {
+        if (instance == null) instance = new DatabaseManager();
+        return instance;
     }
 
-    public void findAllQuestionsInCompany(String companyName, SwipeStackAdapter<Question> adapter, String issue) {
-        //Log.d("COMPANY NAME", companyName);
-        findCompanySnapshot(companyName, adapter, issue);
-    }
-
-
-    private boolean checkWithIssue(String[] splittedIssue, String splittedStr[]) {
-        boolean result = false;
-        for (String strPart : splittedStr) {
-            strPart = strPart.toLowerCase();
-            for (String issuePart : splittedIssue) {
-                issuePart = issuePart.toLowerCase();
-                //Log.i("ANSWER - QUESTION", strPart+" - "+issuePart);
-                if (issuePart.equals(strPart)) result = true;
+    public DataSnapshot findCompanyByName(String companyName) {
+        String dbCompanies = KnowledgeDB.getResourceString(R.string.dbCompanies);
+        DataSnapshot companiesSnapshot = rootSnapshot.child(dbCompanies);
+        DataSnapshot resultSnapshot = companiesSnapshot.child("0");
+        double maxSimilarity = -1;
+        for (DataSnapshot companySnapshot : companiesSnapshot.getChildren()) {
+            String dbTitle = KnowledgeDB.getResourceString(R.string.dbTitle);
+            String currentCompanyName = (String) companySnapshot.child(dbTitle).getValue();
+            double currentSimilarity = getSimilarity(companyName, currentCompanyName);
+            if (currentSimilarity >= maxSimilarity) {
+                resultSnapshot = companySnapshot;
+                maxSimilarity = currentSimilarity;
             }
         }
-        return result;
+
+        return resultSnapshot;
     }
 
-    private void getQuestions(SwipeStackAdapter<Question> adapter, String issue) {
-        //Log.d("COMPANY SNAPSHOT", companySnapshot.toString());
+    private double paragraphSimilarity(String[] p1, String[] p2) {
+        double similarity = 0;
+        int similarityNum = 0;
+        for (String s1 : p1) {
+            for (String s2 : p2) {
+                double currentSimilarity = getSimilarity(s1, s2);
+                //Log.i("Word similarity",s1+" "+s2+" "+currentSimilarity);
+                if (currentSimilarity >= 0.5) {
+                    //Log.i("Word similarity",currentSimilarity+"");
+                    similarity += currentSimilarity;
+                    similarityNum++;
+                }
+            }
+        }
+        if (similarityNum == 0) return 0;
+        return similarity / similarityNum;
+    }
+
+    public List<Question> findCompanyQuestions(DataSnapshot companySnapshot, String issue) {
+        List<Question> questionList = new LinkedList<>();
         String splittedIssue[] = issue.split(SPLIT_BY);
-        List<Question> questionList = new LinkedList<Question>();
-        DataSnapshot categoriesSnapshot = companySnapshot.child("categories");
+
+        DataSnapshot categoriesSnapshot = companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbCategories));
+        //Log.i("categoriesSnapshot", categoriesSnapshot.toString());
         for (DataSnapshot category : categoriesSnapshot.getChildren()) {
-            DataSnapshot subcats = category.child("subcats");
+            DataSnapshot subcats = category.child(KnowledgeDB.getResourceString(R.string.dbSubCats));
+            //Log.i("subcats", subcats.toString());
             for (DataSnapshot subcat : subcats.getChildren()) {
-                DataSnapshot questions = subcat.child("questions");
+                DataSnapshot questions = subcat.child(KnowledgeDB.getResourceString(R.string.dbQuestions));
+                //Log.i("questions", questions.toString());
                 for (DataSnapshot questionDS : questions.getChildren()) {
-                    String answerStr = questionDS.child("answer").getValue().toString();
-                    String questionStr  =questionDS.child("question").getValue().toString();
+                    String answerStr = questionDS.child(KnowledgeDB.getResourceString(R.string.dbAnswer)).getValue().toString();
+                    String questionStr = questionDS.child(KnowledgeDB.getResourceString(R.string.dbQuestion)).getValue().toString();
                     String splittedAnswer[] = answerStr.split(SPLIT_BY);
                     String splittedQuestion[] = questionStr.split(SPLIT_BY);
-                    boolean exist = checkWithIssue(splittedIssue, splittedAnswer);
-                    exist = exist && checkWithIssue(splittedIssue, splittedQuestion);
-                    if (exist) {
+                    double questionSimilarity = paragraphSimilarity(splittedQuestion, splittedIssue);
+                    double answerSimilarity = paragraphSimilarity(splittedAnswer, splittedIssue);
+                    double totalSimilarity = (questionSimilarity + answerSimilarity) / 2;
+                    if (totalSimilarity > 0) {
+                        //Log.i("QUESTION SIMILARITY", totalSimilarity + "");
                         Question question = new Question();
-                        //Log.d("QuestionDS", questionDS.toString());
-                        question.setQuestion(questionDS.child("question").getValue().toString());
-                        question.setAnswer(questionDS.child("answer").getValue().toString());
+                        question.setQuestion(questionDS.child(KnowledgeDB.getResourceString(R.string.dbQuestion)).getValue().toString());
+                        question.setAnswer(questionDS.child(KnowledgeDB.getResourceString(R.string.dbAnswer)).getValue().toString());
+                        question.setSimilarity(totalSimilarity);
+                        Log.d("QuestionDS", question.toString());
                         questionList.add(question);
                     }
                 }
             }
         }
-        adapter.setData(questionList);
-        adapter.notifyDataSetChanged();
-        afterloadHandler.doAfterLoad();
+        return questionList;
     }
 
-    private void findCompanySnapshot(final String companyName, final SwipeStackAdapter<Question> adapter, final String issue) {
-        DatabaseReference localReference = databaseReference.child("companies");
-        //Log.d("FINDCOMPANYSNAPSHOT", localReference.toString());
-        localReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.d("DATASNAPSHOT", dataSnapshot.toString());
+    private static int distLowenstein(String S1, String S2) {
+        int m = S1.length(), n = S2.length();
+        int[] D1;
+        int[] D2 = new int[n + 1];
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String currentCompany = (String) snapshot.child("title").getValue();
-                    //Log.d("SNAPSHOTS", snapshot.toString());
-                    if (currentCompany.equals(companyName)) {
-                        companySnapshot = snapshot;
-                        getQuestions(adapter, issue);
-                        break;
-                    }
+        for (int i = 0; i <= n; i++)
+            D2[i] = i;
+
+        for (int i = 1; i <= m; i++) {
+            D1 = D2;
+            D2 = new int[n + 1];
+            for (int j = 0; j <= n; j++) {
+                if (j == 0) D2[j] = i;
+                else {
+                    int cost = (S1.charAt(i - 1) != S2.charAt(j - 1)) ? 1 : 0;
+                    if (D2[j - 1] < D1[j] && D2[j - 1] < D1[j - 1] + cost)
+                        D2[j] = D2[j - 1] + 1;
+                    else if (D1[j] < D1[j - 1] + cost)
+                        D2[j] = D1[j] + 1;
+                    else
+                        D2[j] = D1[j - 1] + cost;
                 }
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        }
+        return D2[n];
     }
 
-    public DatabaseReference getDatabaseReference() {
-        return databaseReference;
+    private static double getSimilarity(String S1, String S2) {
+        double similar;
+        int totalLength = Math.max(S1.length(), S2.length());
+        similar = 1.0 * (totalLength - distLowenstein(S1, S2)) / totalLength;
+        return similar;
     }
 
-    public void setDatabaseReference(DatabaseReference databaseReference) {
-        this.databaseReference = databaseReference;
+    public DatabaseReference getRootReference() {
+        return rootReference;
+    }
+
+    public void setRootReference(DatabaseReference rootReference) {
+        this.rootReference = rootReference;
+    }
+
+    public DataSnapshot getRootSnapshot() {
+        return rootSnapshot;
+    }
+
+    public void setRootSnapshot(DataSnapshot rootSnapshot) {
+        this.rootSnapshot = rootSnapshot;
+    }
+
+    public DataSnapshot getTransferSnapshot() {
+        return transferSnapshot;
+    }
+
+    public void setTransferSnapshot(DataSnapshot transferSnapshot) {
+        this.transferSnapshot = transferSnapshot;
     }
 }

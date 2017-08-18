@@ -7,7 +7,7 @@
     tools:context="com.example.aidar.knowledgedb.activities.SolveIssueActivity">
 
     <ProgressBar
-        android:id="@+id/progressBar1"
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +23,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:stack_rotation="0"
-        app:stack_size="1"
+        app:stack_size="2"
+
+        app:stack_spacing="4dp"
         app:animation_duration="300"/>
 
     <LinearLayout
