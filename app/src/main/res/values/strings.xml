@@ -23,4 +23,6 @@
     <string name="dbTitle">title</string>
     
     <string name="javaIssue">issue</string>
+    <string name="javaQuestion">quesetion</string>
+    <string name="javaAnswer">answer</string>
 </resources>

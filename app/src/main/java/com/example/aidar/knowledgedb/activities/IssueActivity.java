@@ -17,15 +17,18 @@ import com.google.firebase.database.DataSnapshot;
 public class IssueActivity extends AppCompatActivity {
 
     EditText issueEditText;
+    DatabaseManager databaseManager;
     DataSnapshot companySnapshot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issue);
 
-        companySnapshot = DatabaseManager.getInstance().getTransferSnapshot();
-        final String companyName = (String) companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue();
-        getSupportActionBar().setTitle(companyName);
+        //companySnapshot = DatabaseManager.getInstance().getTransferSnapshot();
+        databaseManager = DatabaseManager.getInstance();
+
+        //final String companyName = (String) companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue();
+        getSupportActionBar().setTitle("Казахтелеком");
         issueEditText = (EditText) findViewById(R.id.issue_desription_editText);
 
         //Make editText multiline, other way doesn't work with keyboard
@@ -47,6 +50,7 @@ public class IssueActivity extends AppCompatActivity {
     }
 
     private void startSolveIssueActivity(){
+        companySnapshot = databaseManager.findCompanyByName("Казахтелеком".toString());
         Intent intentToStartSolveIssueActivity = new Intent(this, SolveIssueActivity.class);
         DatabaseManager.getInstance().setTransferSnapshot(companySnapshot);
         intentToStartSolveIssueActivity.putExtra(KnowledgeDB.getResourceString(R.string.javaIssue), issueEditText.getText().toString());

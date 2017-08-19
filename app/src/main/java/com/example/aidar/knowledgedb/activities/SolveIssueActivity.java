@@ -49,7 +49,7 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
         swipeStack.setListener(this);
 
         companySnapshot = DatabaseManager.getInstance().getTransferSnapshot();
-        String companyName = (String) companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue();
+        //String companyName = (String) companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue();
         String issue = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaIssue));
         if (issue == null) issue = "";
 
@@ -119,7 +119,8 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
     private void startAnswerActivity(int position) {
         Intent intentToStartSolveIssueActivity = new Intent(this, AnswerActivity.class);
         Question question = swipeStackAdapter.getItem(position);
-        intentToStartSolveIssueActivity.putExtra(Intent.EXTRA_TEXT, question.getAnswer());
+        intentToStartSolveIssueActivity.putExtra(KnowledgeDB.getResourceString(R.string.javaQuestion), question.getQuestion());
+        intentToStartSolveIssueActivity.putExtra(KnowledgeDB.getResourceString(R.string.javaAnswer), question.getAnswer());
         startActivity(intentToStartSolveIssueActivity);
     }
 

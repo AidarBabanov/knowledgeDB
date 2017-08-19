@@ -15,12 +15,14 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.example.aidar.knowledgedb.KnowledgeDB;
 import com.example.aidar.knowledgedb.R;
 
 public class AnswerActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
     TextView answerTextView;
+    TextView questionTextView;
     NestedScrollView scrollView;
     int actionBarHeight;
     private static final int HIDE_THRESHOLD = 20;
@@ -61,6 +63,7 @@ public class AnswerActivity extends AppCompatActivity {
         }
 
         answerTextView = (TextView) findViewById(R.id.answerTextView);
+        questionTextView = (TextView) findViewById(R.id.questionTextView);
         scrollView = (NestedScrollView) findViewById(R.id.scrollView);
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -116,8 +119,10 @@ public class AnswerActivity extends AppCompatActivity {
 //        fadeOut.setInterpolator(new AccelerateInterpolator());
 //        fadeOut.setDuration(fadeOutDuration);
 
-        String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-        answerTextView.setText(text);
+        String answerText = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaAnswer));
+        String questionText = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaQuestion));
+        questionTextView.setText(questionText);
+        answerTextView.setText(answerText);
         answerTextView.setMovementMethod(new ScrollingMovementMethod());
 //
 //        helpedButton.setOnClickListener(new View.OnClickListener() {
