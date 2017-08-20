@@ -9,11 +9,22 @@
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="buttonStyle">@style/button</item>
     </style>
+
     <style name="NoActionBarTheme" parent="MainTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="button" parent="@style/Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
+
+    <style name="MainTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MainTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MainTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
