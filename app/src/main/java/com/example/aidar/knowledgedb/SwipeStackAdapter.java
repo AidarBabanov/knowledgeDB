@@ -14,11 +14,11 @@ import java.util.List;
  * Created by aidar on 8/3/17.
  */
 
-public class SwipeStackAdapter<T> extends BaseAdapter {
+public class SwipeStackAdapter extends BaseAdapter {
 
     private Context context;
     private ButtonSwipeOnClickHandler buttonSwipeOnClickHandler;
-    private List<T> data;
+    private List<Question> data;
     private ImageButton yesButton;
     private ImageButton noButton;
 
@@ -39,7 +39,7 @@ public class SwipeStackAdapter<T> extends BaseAdapter {
     }
 
     @Override
-    public T getItem(int position) {
+    public Question getItem(int position) {
         return data.get(position);
     }
 
@@ -52,7 +52,9 @@ public class SwipeStackAdapter<T> extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.swipe_card, parent, false);
+        TextView subcatView = (TextView) convertView.findViewById(R.id.subcat);
         TextView textViewCard = (TextView) convertView.findViewById(R.id.solve_info_text);
+        subcatView.setText(data.get(position).getSubcat());
         textViewCard.setText(data.get(position).toString());
         yesButton = (ImageButton) convertView.findViewById(R.id.yes_question);
         noButton = (ImageButton) convertView.findViewById(R.id.no_question);
@@ -71,15 +73,15 @@ public class SwipeStackAdapter<T> extends BaseAdapter {
         return convertView;
     }
 
-    public void setData(List<T> data) {
+    public void setData(List<Question> data) {
         this.data = data;
     }
 
-    public void insertItemIntoStack(int position, T item) {
+    public void insertItemIntoStack(int position, Question item) {
         data.add(position, item);
     }
 
-    public List<T> getData() {
+    public List<Question> getData() {
         return data;
     }
 }

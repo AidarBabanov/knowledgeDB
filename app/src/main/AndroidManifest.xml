@@ -18,6 +18,7 @@
         </activity>
         <activity
             android:name=".activities.IssueActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +28,7 @@
         </activity>
         <activity
             android:name=".activities.SolveIssueActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_solveIssue"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
@@ -35,6 +37,7 @@
         </activity>
         <activity
             android:name=".activities.AnswerActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_answer"
             android:theme="@style/NoActionBarTheme">
         android:parentActivityName=".activities.MainActivity">

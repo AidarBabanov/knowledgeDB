@@ -103,6 +103,7 @@ public class DatabaseManager {
                     if (totalSimilarity > 0) {
                         //Log.i("QUESTION SIMILARITY", totalSimilarity + "");
                         Question question = new Question();
+                        question.setSubcat(subcat.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue().toString());
                         question.setQuestion(questionDS.child(KnowledgeDB.getResourceString(R.string.dbQuestion)).getValue().toString());
                         question.setAnswer(questionDS.child(KnowledgeDB.getResourceString(R.string.dbAnswer)).getValue().toString());
                         question.setSimilarity(totalSimilarity);

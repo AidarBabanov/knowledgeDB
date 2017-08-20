@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 public class Question implements Comparable<Question> {
     private String question;
     private String answer;
+    private String subcat;
     private double similarity;
 
     public String getQuestion() {
@@ -44,5 +45,13 @@ public class Question implements Comparable<Question> {
         if (similarity < question.similarity) return -1;
         else if (similarity == question.similarity) return 0;
         else return 1;
+    }
+
+    public String getSubcat() {
+        return subcat;
+    }
+
+    public void setSubcat(String subcat) {
+        this.subcat = subcat;
     }
 }

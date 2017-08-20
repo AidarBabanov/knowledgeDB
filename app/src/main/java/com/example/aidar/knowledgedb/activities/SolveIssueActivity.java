@@ -26,7 +26,7 @@ import link.fls.swipestack.SwipeStack;
 public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.SwipeStackListener, SwipeStackAdapter.ButtonSwipeOnClickHandler, DataGetterAsyncTask.PostExecuteListener {
 
     SwipeStack swipeStack;
-    SwipeStackAdapter<Question> swipeStackAdapter;
+    SwipeStackAdapter swipeStackAdapter;
     DatabaseManager databaseManager;
     LinearLayout didntFindLinearLayout;
     Button tryAgain;
@@ -57,7 +57,7 @@ public class SolveIssueActivity extends AppCompatActivity implements SwipeStack.
         dataGetterAsyncTask = new DataGetterAsyncTask();
         dataGetterAsyncTask.setParams(databaseManager.getTransferSnapshot(), issue, this);
         dataGetterAsyncTask.execute();
-        swipeStackAdapter = new SwipeStackAdapter<>(this, this);
+        swipeStackAdapter = new SwipeStackAdapter(this, this);
         //Log.i("LIST SIZE", questionList.size()+"");
         swipeStack.setAdapter(swipeStackAdapter);
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.aidar.knowledgedb.activities.AnswerActivity">
-    
 
 
     <android.support.v4.widget.NestedScrollView
@@ -20,35 +20,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/textBackground"
+            android:orientation="vertical"
             android:paddingTop="?attr/actionBarSize"
-            android:orientation="vertical">
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/questionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Heading"
                 android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:textSize="34sp"
+                android:paddingBottom="20dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                />
+                android:text="Heading"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/answerTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
-                android:textSize="16sp"
-                android:lineSpacingMultiplier="1.7"
                 android:isScrollContainer="false"
+                android:lineSpacingMultiplier="1.7"
+                android:paddingBottom="16dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:paddingBottom="16dp"
-                android:paddingTop="0dp"/>
+                android:paddingTop="0dp"
+                android:textSize="16sp" />
 
 
         </LinearLayout>
@@ -60,121 +60,137 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp"/>
+        android:elevation="4dp"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:clickable="true"
+            app:fabSize="normal"
+            app:srcCompat="@android:drawable/ic_menu_call" />
+    </android.support.design.widget.CoordinatorLayout>
 
     <!--<FrameLayout-->
-        <!--android:id="@+id/footer"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="@color/cardview_light_background"-->
-        <!--android:elevation="8dp">-->
+    <!--android:id="@+id/footer"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:background="@color/cardview_light_background"-->
+    <!--android:elevation="8dp">-->
 
-        <!--<android.support.constraint.ConstraintLayout-->
-            <!--android:id="@+id/footer_helped"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
+    <!--<android.support.constraint.ConstraintLayout-->
+    <!--android:id="@+id/footer_helped"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-            <!--<Button-->
-                <!--android:id="@+id/not_helped_button"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="8dp"-->
-                <!--android:text="@string/no"-->
-                <!--app:layout_constraintRight_toRightOf="parent"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--<Button-->
+    <!--android:id="@+id/not_helped_button"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:text="@string/no"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
 
-            <!--<Button-->
-                <!--android:id="@+id/helped_button"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="8dp"-->
-                <!--android:text="@string/yes"-->
-                <!--app:layout_constraintRight_toLeftOf="@+id/not_helped_button"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--<Button-->
+    <!--android:id="@+id/helped_button"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:text="@string/yes"-->
+    <!--app:layout_constraintRight_toLeftOf="@+id/not_helped_button"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/is_helped_textView"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:layout_marginLeft="32dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/isHelped"-->
-                <!--app:layout_constraintLeft_toLeftOf="parent"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
-        <!--</android.support.constraint.ConstraintLayout>-->
+    <!--<TextView-->
+    <!--android:id="@+id/is_helped_textView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_marginLeft="32dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/isHelped"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--</android.support.constraint.ConstraintLayout>-->
 
-        <!--<android.support.constraint.ConstraintLayout-->
-            <!--android:id="@+id/footer_start_new_search"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:visibility="invisible">-->
+    <!--<android.support.constraint.ConstraintLayout-->
+    <!--android:id="@+id/footer_start_new_search"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:visibility="invisible">-->
 
-            <!--<Button-->
-                <!--android:id="@+id/dont_start_new_search"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="8dp"-->
-                <!--android:text="@string/no"-->
-                <!--app:layout_constraintRight_toRightOf="parent"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--<Button-->
+    <!--android:id="@+id/dont_start_new_search"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:text="@string/no"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
 
-            <!--<Button-->
-                <!--android:id="@+id/start_new_search"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="8dp"-->
-                <!--android:text="@string/yes"-->
-                <!--app:layout_constraintRight_toLeftOf="@+id/dont_start_new_search"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--<Button-->
+    <!--android:id="@+id/start_new_search"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:text="@string/yes"-->
+    <!--app:layout_constraintRight_toLeftOf="@+id/dont_start_new_search"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/is_new_search"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:layout_marginLeft="32dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/start_new_search"-->
-                <!--app:layout_constraintLeft_toLeftOf="parent"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--<TextView-->
+    <!--android:id="@+id/is_new_search"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_marginLeft="32dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/start_new_search"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
 
-        <!--</android.support.constraint.ConstraintLayout>-->
+    <!--</android.support.constraint.ConstraintLayout>-->
 
-        <!--<android.support.constraint.ConstraintLayout-->
-            <!--android:id="@+id/footer_continue_search"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:visibility="invisible">-->
+    <!--<android.support.constraint.ConstraintLayout-->
+    <!--android:id="@+id/footer_continue_search"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:visibility="invisible">-->
 
-            <!--<Button-->
-                <!--android:id="@+id/dont_continue_search"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="8dp"-->
-                <!--android:text="@string/no"-->
-                <!--app:layout_constraintRight_toRightOf="parent"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--<Button-->
+    <!--android:id="@+id/dont_continue_search"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:text="@string/no"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
 
-            <!--<Button-->
-                <!--android:id="@+id/continue_search"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="8dp"-->
-                <!--android:text="@string/yes"-->
-                <!--app:layout_constraintRight_toLeftOf="@id/dont_continue_search"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--<Button-->
+    <!--android:id="@+id/continue_search"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:text="@string/yes"-->
+    <!--app:layout_constraintRight_toLeftOf="@id/dont_continue_search"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/is_continue_search"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:layout_marginLeft="32dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/continue_search"-->
-                <!--app:layout_constraintLeft_toLeftOf="parent"-->
-                <!--tools:layout_editor_absoluteY="0dp" />-->
-        <!--</android.support.constraint.ConstraintLayout>-->
+    <!--<TextView-->
+    <!--android:id="@+id/is_continue_search"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_marginLeft="32dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/continue_search"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--tools:layout_editor_absoluteY="0dp" />-->
+    <!--</android.support.constraint.ConstraintLayout>-->
 
     <!--</LinearLayout>-->
 

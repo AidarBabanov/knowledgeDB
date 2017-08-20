@@ -3,7 +3,9 @@ package com.example.aidar.knowledgedb.activities;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ import com.example.aidar.knowledgedb.R;
 
 public class AnswerActivity extends AppCompatActivity {
 
+    FloatingActionButton floatingActionButton;
     Toolbar mToolbar;
     TextView answerTextView;
     TextView questionTextView;
@@ -47,6 +51,7 @@ public class AnswerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
 
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         //setTitle(getString(R.string.app_name));
@@ -124,6 +129,14 @@ public class AnswerActivity extends AppCompatActivity {
         questionTextView.setText(questionText);
         answerTextView.setText(answerText);
         answerTextView.setMovementMethod(new ScrollingMovementMethod());
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:160"));
+                startActivity(intent);
+            }
+        });
 //
 //        helpedButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -199,6 +212,7 @@ public class AnswerActivity extends AppCompatActivity {
 
     private void hideViews() {
         mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        floatingActionButton.hide();
 
 //        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
 //        int fabBottomMargin = lp.bottomMargin;
@@ -207,6 +221,7 @@ public class AnswerActivity extends AppCompatActivity {
 
     private void showViews() {
         mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        floatingActionButton.show();
 //        mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 }
