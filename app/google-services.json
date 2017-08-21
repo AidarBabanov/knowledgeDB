@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:972924545488:android:813263c55c615bd7",
         "android_client_info": {
-          "package_name": "com.example.aidar.knowledgedb"
+          "package_name": "com.nFactorial.aidar.knowledgedb"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "972924545488-ec22514gtpt2q5t8vak3td2pf1r2uv5u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aidar.knowledgedb",
+            "package_name": "com.nFactorial.aidar.knowledgedb",
             "certificate_hash": "1bfffd779bde7d2cc5065779340d9a13a209bcfe"
           }
         },
