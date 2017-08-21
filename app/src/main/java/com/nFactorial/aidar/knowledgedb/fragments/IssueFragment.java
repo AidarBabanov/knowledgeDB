@@ -1,39 +1,33 @@
-package com.example.aidar.knowledgedb.fragments;
+package com.nFactorial.aidar.knowledgedb.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.example.aidar.knowledgedb.DatabaseManager;
-import com.example.aidar.knowledgedb.KnowledgeDB;
-import com.example.aidar.knowledgedb.ListItem;
-import com.example.aidar.knowledgedb.Question;
-import com.example.aidar.knowledgedb.R;
-import com.example.aidar.knowledgedb.RecyclerViewAdapter;
-import com.example.aidar.knowledgedb.activities.AnswerActivity;
-import com.example.aidar.knowledgedb.activities.TopicActivity;
+import com.nFactorial.aidar.knowledgedb.DatabaseManager;
+import com.nFactorial.aidar.knowledgedb.KnowledgeDB;
+import com.nFactorial.aidar.knowledgedb.R;
+import com.nFactorial.aidar.knowledgedb.activities.SolveIssueActivity;
 import com.google.firebase.database.DataSnapshot;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MenuFragment.OnFragmentInteractionListener} interface
+ * {@link IssueFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MenuFragment#newInstance} factory method to
+ * Use the {@link IssueFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MenuFragment extends Fragment implements RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler {
+public class IssueFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,12 +39,11 @@ public class MenuFragment extends Fragment implements RecyclerViewAdapter.Recycl
 
     private OnFragmentInteractionListener mListener;
 
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
-    private DatabaseManager databaseManager;
-    private DataSnapshot companySpanshot;
-    List<ListItem> listItems;
-    public MenuFragment() {
+
+    EditText issueEditText;
+    DatabaseManager databaseManager;
+    DataSnapshot companySnapshot;
+    public IssueFragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +53,11 @@ public class MenuFragment extends Fragment implements RecyclerViewAdapter.Recycl
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MenuFragment.
+     * @return A new instance of fragment IssueFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MenuFragment newInstance(String param1, String param2) {
-        MenuFragment fragment = new MenuFragment();
+    public static IssueFragment newInstance(String param1, String param2) {
+        IssueFragment fragment = new IssueFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,22 +72,39 @@ public class MenuFragment extends Fragment implements RecyclerViewAdapter.Recycl
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_issue, container, false);
 
+        //companySnapshot = DatabaseManager.getInstance().getTransferSnapshot();
         databaseManager = DatabaseManager.getInstance();
-        companySpanshot = databaseManager.findCompanyByName("Казахтелеком");
-        listItems = getList();
-        recyclerViewAdapter = new RecyclerViewAdapter(listItems, this);
-        recyclerView = (RecyclerView) view.findViewById(R.id.menu_recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(recyclerViewAdapter);
+
+        //final String companyName = (String) companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue();
+        //getSupportActionBar().setTitle("Казахтелеком");
+        issueEditText = (EditText) view.findViewById(R.id.issue_desription_editText);
+
+        //Make editText multiline, other way doesn't work with keyboard
+        issueEditText.setHorizontallyScrolling(false);
+        issueEditText.setMaxLines(Integer.MAX_VALUE);
+        issueEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+
+        //Search button in keyboard
+        issueEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    startSolveIssueActivity();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -122,11 +132,6 @@ public class MenuFragment extends Fragment implements RecyclerViewAdapter.Recycl
         mListener = null;
     }
 
-    @Override
-    public void onClick(int position) {
-        startTopicActivity(position);
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -142,24 +147,11 @@ public class MenuFragment extends Fragment implements RecyclerViewAdapter.Recycl
         void onFragmentInteraction(Uri uri);
     }
 
-    private List<ListItem> getList(){
-        DataSnapshot categories = companySpanshot.child(KnowledgeDB.getResourceString(R.string.dbCategories));
-        List<ListItem> listItems = new LinkedList<ListItem>();
-        for(DataSnapshot dataSnapshot: categories.getChildren()){
-            ListItem listItem = new ListItem();
-            listItem.setText(dataSnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue().toString());
-            listItem.setDataSnapshot(dataSnapshot);
-            listItems.add(listItem);
-        }
-        return  listItems;
+    private void startSolveIssueActivity(){
+        companySnapshot = databaseManager.findCompanyByName("Казахтелеком".toString());
+        Intent intentToStartSolveIssueActivity = new Intent(getActivity(), SolveIssueActivity.class);
+        DatabaseManager.getInstance().setTransferSnapshot(companySnapshot);
+        intentToStartSolveIssueActivity.putExtra(KnowledgeDB.getResourceString(R.string.javaIssue), issueEditText.getText().toString());
+        startActivity(intentToStartSolveIssueActivity);
     }
-
-    private void startTopicActivity(int position) {
-        ListItem listItem = listItems.get(position);
-        Intent intentToStartTopicActivity = new Intent(getActivity(), TopicActivity.class);
-        intentToStartTopicActivity.putExtra(KnowledgeDB.getResourceString(R.string.dbTitle), listItem.getText());
-        databaseManager.setTransferSnapshot(listItem.getDataSnapshot());
-        startActivity(intentToStartTopicActivity);
-    }
-
 }

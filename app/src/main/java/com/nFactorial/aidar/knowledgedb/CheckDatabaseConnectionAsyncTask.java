@@ -1,4 +1,4 @@
-package com.example.aidar.knowledgedb;
+package com.nFactorial.aidar.knowledgedb;
 
 import android.app.Activity;
 import android.content.Context;

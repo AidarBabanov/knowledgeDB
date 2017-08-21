@@ -5,21 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.example.aidar.knowledgedb.activities.StartupActivityActivity">
+    tools:context="com.nFactorial.aidar.knowledgedb.activities.StartupActivityActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/icon2"
-        android:layout_centerInParent="true"
-        android:id="@+id/imageView2" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:id="@+id/network_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:textSize="18sp"/>
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </RelativeLayout>

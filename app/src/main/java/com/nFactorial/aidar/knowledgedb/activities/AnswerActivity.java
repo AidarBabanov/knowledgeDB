@@ -1,4 +1,4 @@
-package com.example.aidar.knowledgedb.activities;
+package com.nFactorial.aidar.knowledgedb.activities;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -13,7 +13,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +22,8 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
-import com.example.aidar.knowledgedb.KnowledgeDB;
-import com.example.aidar.knowledgedb.Question;
-import com.example.aidar.knowledgedb.R;
+import com.nFactorial.aidar.knowledgedb.KnowledgeDB;
+import com.nFactorial.aidar.knowledgedb.R;
 
 public class AnswerActivity extends AppCompatActivity {
 

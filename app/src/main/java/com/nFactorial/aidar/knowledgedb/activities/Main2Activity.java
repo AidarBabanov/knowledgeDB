@@ -1,12 +1,7 @@
-package com.example.aidar.knowledgedb.activities;
+package com.nFactorial.aidar.knowledgedb.activities;
 
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,13 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.example.aidar.knowledgedb.R;
-import com.example.aidar.knowledgedb.fragments.AboutAppFragment;
-import com.example.aidar.knowledgedb.fragments.IssueFragment;
-import com.example.aidar.knowledgedb.fragments.MenuFragment;
+import com.nFactorial.aidar.knowledgedb.R;
+import com.nFactorial.aidar.knowledgedb.fragments.AboutAppFragment;
+import com.nFactorial.aidar.knowledgedb.fragments.IssueFragment;
+import com.nFactorial.aidar.knowledgedb.fragments.MenuFragment;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

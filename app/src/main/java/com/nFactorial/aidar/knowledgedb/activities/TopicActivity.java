@@ -1,19 +1,17 @@
-package com.example.aidar.knowledgedb.activities;
+package com.nFactorial.aidar.knowledgedb.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.aidar.knowledgedb.DatabaseManager;
-import com.example.aidar.knowledgedb.KnowledgeDB;
-import com.example.aidar.knowledgedb.ListItem;
-import com.example.aidar.knowledgedb.Question;
-import com.example.aidar.knowledgedb.R;
-import com.example.aidar.knowledgedb.RecyclerViewAdapter;
+import com.nFactorial.aidar.knowledgedb.DatabaseManager;
+import com.nFactorial.aidar.knowledgedb.KnowledgeDB;
+import com.nFactorial.aidar.knowledgedb.ListItem;
+import com.nFactorial.aidar.knowledgedb.R;
+import com.nFactorial.aidar.knowledgedb.RecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.LinkedList;

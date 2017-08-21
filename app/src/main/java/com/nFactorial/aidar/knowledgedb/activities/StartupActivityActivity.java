@@ -1,18 +1,14 @@
-package com.example.aidar.knowledgedb.activities;
+package com.nFactorial.aidar.knowledgedb.activities;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.example.aidar.knowledgedb.CheckDatabaseConnectionAsyncTask;
-import com.example.aidar.knowledgedb.DatabaseManager;
-import com.example.aidar.knowledgedb.R;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.nFactorial.aidar.knowledgedb.CheckDatabaseConnectionAsyncTask;
+import com.nFactorial.aidar.knowledgedb.DatabaseManager;
+import com.nFactorial.aidar.knowledgedb.R;
 
 public class StartupActivityActivity extends AppCompatActivity implements CheckDatabaseConnectionAsyncTask.CheckDatabaseResponces {
 
