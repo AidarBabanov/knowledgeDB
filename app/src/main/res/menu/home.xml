@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_Button"
+        android:icon="@drawable/ic_action_name"
+        android:title="@string/home_button" />
+    <item android:title="@string/copy_text"
+        android:id="@+id/copy_text"/>
+</menu>

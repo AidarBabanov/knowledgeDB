@@ -33,12 +33,12 @@
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:paddingTop="20dp"
-                android:text="Heading"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/answerTextView"
+                android:textIsSelectable = "true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
@@ -61,7 +61,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

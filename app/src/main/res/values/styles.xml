@@ -13,6 +13,7 @@
     <style name="NoActionBarTheme" parent="MainTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="button" parent="@style/Widget.AppCompat.Button.Colored">

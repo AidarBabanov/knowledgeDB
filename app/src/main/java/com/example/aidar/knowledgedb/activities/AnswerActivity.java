@@ -1,5 +1,8 @@
 package com.example.aidar.knowledgedb.activities;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -12,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -19,6 +24,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.example.aidar.knowledgedb.KnowledgeDB;
+import com.example.aidar.knowledgedb.Question;
 import com.example.aidar.knowledgedb.R;
 
 public class AnswerActivity extends AppCompatActivity {
@@ -33,6 +39,8 @@ public class AnswerActivity extends AppCompatActivity {
     private int scrolledDistance = 0;
     private boolean controlsHidden = false;
 
+    String answerText;
+    String questionText;
 //    Button helpedButton;
 //    Button notHelpedButton;
 //    Button startNewSearchButton;
@@ -124,8 +132,8 @@ public class AnswerActivity extends AppCompatActivity {
 //        fadeOut.setInterpolator(new AccelerateInterpolator());
 //        fadeOut.setDuration(fadeOutDuration);
 
-        String answerText = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaAnswer));
-        String questionText = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaQuestion));
+        answerText = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaAnswer));
+        questionText = getIntent().getStringExtra(KnowledgeDB.getResourceString(R.string.javaQuestion));
         questionTextView.setText(questionText);
         answerTextView.setText(answerText);
         answerTextView.setMovementMethod(new ScrollingMovementMethod());
@@ -206,6 +214,12 @@ public class AnswerActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.home_Button:
+                startMainActivity();
+                return true;
+            case R.id.copy_text:
+                copyToClipboard();
+                return true;
         }
         return (super.onOptionsItemSelected(item));
     }
@@ -223,5 +237,23 @@ public class AnswerActivity extends AppCompatActivity {
         mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
         floatingActionButton.show();
 //        mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home, menu);
+        return true;
+    }
+
+
+    private void startMainActivity() {
+        Intent intentMainActivity = new Intent(this, Main2Activity.class);
+        startActivity(intentMainActivity);
+    }
+    private void copyToClipboard(){
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Text Label", questionText+"\n\n"+answerText);
+        clipboard.setPrimaryClip(clip);
     }
 }
