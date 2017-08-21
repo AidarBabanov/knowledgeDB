@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.aidar.knowledgedb.activities.SolveIssueActivity">
+    tools:context="com.nFactorial.aidar.knowledgedb.activities.SolveIssueActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"

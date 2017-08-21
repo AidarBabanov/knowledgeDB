@@ -1,4 +1,4 @@
-package com.example.aidar.knowledgedb.activities;
+package com.nFactorial.aidar.knowledgedb.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +9,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.aidar.knowledgedb.DatabaseManager;
-import com.example.aidar.knowledgedb.KnowledgeDB;
-import com.example.aidar.knowledgedb.R;
+import com.nFactorial.aidar.knowledgedb.DatabaseManager;
+import com.nFactorial.aidar.knowledgedb.KnowledgeDB;
+import com.nFactorial.aidar.knowledgedb.R;
 import com.google.firebase.database.DataSnapshot;
 
 public class IssueActivity extends AppCompatActivity {

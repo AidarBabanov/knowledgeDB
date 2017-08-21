@@ -1,4 +1,4 @@
-package com.example.aidar.knowledgedb.activities;
+package com.nFactorial.aidar.knowledgedb.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.example.aidar.knowledgedb.DatabaseManager;
-import com.example.aidar.knowledgedb.DataGetterAsyncTask;
-import com.example.aidar.knowledgedb.KnowledgeDB;
-import com.example.aidar.knowledgedb.Question;
-import com.example.aidar.knowledgedb.R;
-import com.example.aidar.knowledgedb.SwipeStackAdapter;
+import com.nFactorial.aidar.knowledgedb.DatabaseManager;
+import com.nFactorial.aidar.knowledgedb.DataGetterAsyncTask;
+import com.nFactorial.aidar.knowledgedb.KnowledgeDB;
+import com.nFactorial.aidar.knowledgedb.Question;
+import com.nFactorial.aidar.knowledgedb.R;
+import com.nFactorial.aidar.knowledgedb.SwipeStackAdapter;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.Collections;

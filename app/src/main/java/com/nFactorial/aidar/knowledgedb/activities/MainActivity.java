@@ -1,4 +1,4 @@
-package com.example.aidar.knowledgedb.activities;
+package com.nFactorial.aidar.knowledgedb.activities;
 
 
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.aidar.knowledgedb.DatabaseManager;
-import com.example.aidar.knowledgedb.R;
-import com.example.aidar.knowledgedb.RecyclerViewAdapter;
+import com.nFactorial.aidar.knowledgedb.DatabaseManager;
+import com.nFactorial.aidar.knowledgedb.R;
+import com.nFactorial.aidar.knowledgedb.RecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
