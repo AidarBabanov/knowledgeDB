@@ -18,18 +18,18 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<String> listItems;
+    private List<ListItem> listItems;
     private RecyclerViewAdapterOnClickHandler recyclerViewAdapterOnClickHandler;
 
     public interface RecyclerViewAdapterOnClickHandler {
-        void onClick(String listItemName);
+        void onClick(int position);
     }
 
-    public void setData(List<String> listItems){
+    public void setData(List<ListItem> listItems){
         this.listItems = listItems;
     }
 
-    public RecyclerViewAdapter(List<String> listItems, RecyclerViewAdapterOnClickHandler recyclerViewAdapterOnClickHandler) {
+    public RecyclerViewAdapter(List<ListItem> listItems, RecyclerViewAdapterOnClickHandler recyclerViewAdapterOnClickHandler) {
         this.listItems = listItems;
         this.recyclerViewAdapterOnClickHandler = recyclerViewAdapterOnClickHandler;
     }
@@ -47,7 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText(listItems.get(position));
+        holder.textView.setText(listItems.get(position).toString());
     }
 
     @Override
@@ -68,8 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            String topic = listItems.get(adapterPosition);
-            recyclerViewAdapterOnClickHandler.onClick(topic);
+            recyclerViewAdapterOnClickHandler.onClick(adapterPosition);
         }
 
     }

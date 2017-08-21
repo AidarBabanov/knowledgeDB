@@ -4,10 +4,22 @@
     android:layout_height="match_parent"
     tools:context="com.example.aidar.knowledgedb.fragments.IssueFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <EditText
+        android:id="@+id/issue_desription_editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="SUKA" />
+        android:background="@color/textBackground"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/describe_your_problem"
+        android:inputType="text"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:textSize="18sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
 </FrameLayout>

@@ -4,11 +4,22 @@ import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.aidar.knowledgedb.DatabaseManager;
+import com.example.aidar.knowledgedb.KnowledgeDB;
+import com.example.aidar.knowledgedb.ListItem;
 import com.example.aidar.knowledgedb.R;
+import com.example.aidar.knowledgedb.RecyclerViewAdapter;
+import com.google.firebase.database.DataSnapshot;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +29,7 @@ import com.example.aidar.knowledgedb.R;
  * Use the {@link MenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MenuFragment extends Fragment {
+public class MenuFragment extends Fragment implements RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +41,11 @@ public class MenuFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private DatabaseManager databaseManager;
+    private DataSnapshot companySpanshot;
+    List<ListItem> listItems;
     public MenuFragment() {
         // Required empty public constructor
     }
@@ -65,7 +81,17 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        databaseManager = DatabaseManager.getInstance();
+        companySpanshot = databaseManager.findCompanyByName("Казахтелеком");
+        listItems = getList();
+        recyclerViewAdapter = new RecyclerViewAdapter(listItems, this);
+        recyclerView = (RecyclerView) view.findViewById(R.id.menu_recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(recyclerViewAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,6 +118,11 @@ public class MenuFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(int position) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -106,4 +137,17 @@ public class MenuFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private List<ListItem> getList(){
+        DataSnapshot categories = companySpanshot.child(KnowledgeDB.getResourceString(R.string.dbCategories));
+        List<ListItem> listItems = new LinkedList<ListItem>();
+        for(DataSnapshot dataSnapshot: categories.getChildren()){
+            ListItem listItem = new ListItem();
+            listItem.setText(dataSnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue().toString());
+            listItem.setDataSnapshot(dataSnapshot);
+            listItems.add(listItem);
+        }
+        return  listItems;
+    }
+
 }

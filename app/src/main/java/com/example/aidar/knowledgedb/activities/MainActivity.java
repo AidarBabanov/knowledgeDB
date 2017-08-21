@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         popularCompaniesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         popularCompaniesList = new ArrayList<String>();
         for (int i = 0; i < 5; i++) popularCompaniesList.add("Казахтелеком");
-        rvAdapter = new RecyclerViewAdapter(popularCompaniesList, this);
+        //rvAdapter = new RecyclerViewAdapter(popularCompaniesList, this);
         popularCompaniesRV.setAdapter(rvAdapter);
     }
 
@@ -60,16 +60,21 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
     }
 
-    @Override
-    public void onClick(String listItemName) {
-        DataSnapshot companySnapshot = databaseManager.findCompanyByName(listItemName);
-        startIssueActivity(companySnapshot);
-    }
+//    @Override
+//    public void onClick(String listItemName) {
+//        DataSnapshot companySnapshot = databaseManager.findCompanyByName(listItemName);
+//        startIssueActivity(companySnapshot);
+//    }
 
     private void startIssueActivity(DataSnapshot dataSnapshot) {
         Intent intentToStartIssueActivity = new Intent(this, IssueActivity.class);
         databaseManager.setTransferSnapshot(dataSnapshot);
         startActivity(intentToStartIssueActivity);
+
+    }
+
+    @Override
+    public void onClick(int position) {
 
     }
 }

@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:paddingLeft="16dp"
                 android:textColor="@color/primaryTextColor"
                 tools:layout_editor_absoluteX="8dp"
@@ -47,7 +47,7 @@
             android:padding="16dp"
             android:paddingBottom="56dp"
             android:paddingTop="16dp"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/yes_question"

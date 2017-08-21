@@ -2,13 +2,22 @@ package com.example.aidar.knowledgedb.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.aidar.knowledgedb.DatabaseManager;
+import com.example.aidar.knowledgedb.KnowledgeDB;
 import com.example.aidar.knowledgedb.R;
+import com.example.aidar.knowledgedb.activities.SolveIssueActivity;
+import com.google.firebase.database.DataSnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +39,10 @@ public class IssueFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+    EditText issueEditText;
+    DatabaseManager databaseManager;
+    DataSnapshot companySnapshot;
     public IssueFragment() {
         // Required empty public constructor
     }
@@ -59,13 +72,40 @@ public class IssueFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_issue, container, false);
+        View view = inflater.inflate(R.layout.fragment_issue, container, false);
+
+        //companySnapshot = DatabaseManager.getInstance().getTransferSnapshot();
+        databaseManager = DatabaseManager.getInstance();
+
+        //final String companyName = (String) companySnapshot.child(KnowledgeDB.getResourceString(R.string.dbTitle)).getValue();
+        //getSupportActionBar().setTitle("Казахтелеком");
+        issueEditText = (EditText) view.findViewById(R.id.issue_desription_editText);
+
+        //Make editText multiline, other way doesn't work with keyboard
+        issueEditText.setHorizontallyScrolling(false);
+        issueEditText.setMaxLines(Integer.MAX_VALUE);
+        issueEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+
+        //Search button in keyboard
+        issueEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    startSolveIssueActivity();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,5 +145,13 @@ public class IssueFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void startSolveIssueActivity(){
+        companySnapshot = databaseManager.findCompanyByName("Казахтелеком".toString());
+        Intent intentToStartSolveIssueActivity = new Intent(getActivity(), SolveIssueActivity.class);
+        DatabaseManager.getInstance().setTransferSnapshot(companySnapshot);
+        intentToStartSolveIssueActivity.putExtra(KnowledgeDB.getResourceString(R.string.javaIssue), issueEditText.getText().toString());
+        startActivity(intentToStartSolveIssueActivity);
     }
 }
