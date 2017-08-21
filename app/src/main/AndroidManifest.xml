@@ -17,7 +17,11 @@
         <!-- android:theme="@style/NoActionBarTheme"></activity> -->
         <activity
             android:name=".activities.IssueActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
         <activity
             android:name=".activities.SolveIssueActivity"
             android:label="@string/title_activity_solveIssue"
@@ -43,7 +47,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.topicActivity"></activity>
+        <activity
+            android:name=".activities.TopicActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

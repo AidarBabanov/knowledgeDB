@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.aidar.knowledgedb.activities.topicActivity">
+    tools:context="com.example.aidar.knowledgedb.activities.TopicActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/topic_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>

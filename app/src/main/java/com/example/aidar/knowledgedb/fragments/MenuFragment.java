@@ -2,6 +2,7 @@ package com.example.aidar.knowledgedb.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +15,11 @@ import android.view.ViewGroup;
 import com.example.aidar.knowledgedb.DatabaseManager;
 import com.example.aidar.knowledgedb.KnowledgeDB;
 import com.example.aidar.knowledgedb.ListItem;
+import com.example.aidar.knowledgedb.Question;
 import com.example.aidar.knowledgedb.R;
 import com.example.aidar.knowledgedb.RecyclerViewAdapter;
+import com.example.aidar.knowledgedb.activities.AnswerActivity;
+import com.example.aidar.knowledgedb.activities.TopicActivity;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.LinkedList;
@@ -120,7 +124,7 @@ public class MenuFragment extends Fragment implements RecyclerViewAdapter.Recycl
 
     @Override
     public void onClick(int position) {
-
+        startTopicActivity(position);
     }
 
     /**
@@ -148,6 +152,14 @@ public class MenuFragment extends Fragment implements RecyclerViewAdapter.Recycl
             listItems.add(listItem);
         }
         return  listItems;
+    }
+
+    private void startTopicActivity(int position) {
+        ListItem listItem = listItems.get(position);
+        Intent intentToStartTopicActivity = new Intent(getActivity(), TopicActivity.class);
+        intentToStartTopicActivity.putExtra(KnowledgeDB.getResourceString(R.string.dbTitle), listItem.getText());
+        databaseManager.setTransferSnapshot(listItem.getDataSnapshot());
+        startActivity(intentToStartTopicActivity);
     }
 
 }
