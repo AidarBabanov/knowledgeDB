@@ -21,13 +21,12 @@
             android:layout_height="wrap_content"
             android:background="@color/textBackground"
             android:orientation="vertical"
-            android:paddingTop="?attr/actionBarSize"
-            android:weightSum="1">
+            android:paddingTop="?attr/actionBarSize">
 
             <TextView
                 android:id="@+id/questionTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
                 android:paddingBottom="20dp"
                 android:paddingLeft="32dp"
@@ -38,7 +37,6 @@
 
             <TextView
                 android:id="@+id/answerTextView"
-                android:textIsSelectable = "true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
@@ -48,6 +46,7 @@
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:paddingTop="0dp"
+                android:textIsSelectable="true"
                 android:textSize="18sp" />
 
 
@@ -65,15 +64,14 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
-            android:layout_margin="@dimen/fab_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
+            android:layout_margin="@dimen/fab_margin"
             android:clickable="true"
             app:fabSize="normal"
             app:srcCompat="@android:drawable/ic_menu_call" />
