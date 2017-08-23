@@ -79,7 +79,6 @@ public class AnswerActivity extends AppCompatActivity {
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int dx = oldScrollX - scrollX;
                 int dy = oldScrollY - scrollY;
 
                 int top = v.getScrollY() - actionBarHeight;
@@ -143,6 +142,8 @@ public class AnswerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        answerTextView.setTextIsSelectable(true);
+        questionTextView.setTextIsSelectable(true);
 //
 //        helpedButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
